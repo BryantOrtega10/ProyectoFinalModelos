@@ -1,5 +1,5 @@
 window.addEventListener("load", (e) => {
-    document.querySelector("form-general").addEventListener("submit", (e) => {
+    document.querySelector(".formulario-general").addEventListener("submit", (e) => {
         e.preventDefault();
         let formData = new FormData(e.srcElement);
         let data = JSON.stringify(Object.fromEntries(formData));
@@ -15,10 +15,21 @@ window.addEventListener("load", (e) => {
         )
         .then(response => response.json())
         .then(response => {
-            console.log(response);
+            let listErrors = document.getElementById("listErrors");
+            let popup = new bootstrap.Modal(document.getElementById('popup'));
+
+            let titulo_popup = document.getElementById('titulo_popup');
+            let cerrar_pop = document.getElementById('cerrar_pop');
+            let redirect_pop = document.getElementById('redirect_pop');
+
+            popup.show();
             if(response.errors.length > 0){
-                document.getElementById("errors").classList.add('activo');
-                let listErrors = document.getElementById("listErrors");
+
+                redirect_pop.style.display = 'none';
+                cerrar_pop.style.display = 'inline-block';
+                titulo_popup.innerHTML = 'Error(es)';
+                listErrors.style.display = 'block';
+
                 while (listErrors.firstChild) {
                   listErrors.removeChild(listErrors.firstChild);
                 }
@@ -30,7 +41,12 @@ window.addEventListener("load", (e) => {
                 }
 
             }else{
-                window.open(response.data.redirect,"_self");
+                redirect_pop.style.display = 'inline-block';
+                cerrar_pop.style.display = 'none';
+                listErrors.style.display = 'none';
+                titulo_popup.innerHTML = response.message;
+                redirect_pop.href = response.data.redirect;
+
             }
 
         })

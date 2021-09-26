@@ -1,0 +1,42 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Peliculas {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url_for('pelicula.index')}}">Pel&iacute;culas</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <h1>Agregar pel&iacute;culas</h1>
+        <div class="row">
+            <div class="col-12">
+                <form action="{{url_for('pelicula.agregar')}}" method="post" class="formulario-general">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pel_v_titulo" name="pel_v_titulo" placeholder="T&iacute;tulo">
+                                <label for="pel_v_titulo">T&iacute;tulo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-5 col-2">
+                            <button class="btn btn-gen">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
+{% endblock %}
