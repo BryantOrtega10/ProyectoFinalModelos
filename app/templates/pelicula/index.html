@@ -1,0 +1,26 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Peliculas {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Peliculas</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-9 col-3 text-end">
+                <a class="btn btn-gen">Agregar pelicula</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lista_general.js')}}"></script>
+{% endblock %}
