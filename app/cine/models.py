@@ -3,7 +3,7 @@ from app.db import db, ma
 class Cine(db.Model):
     cin_i_id = db.Column(db.Integer, primary_key=True)
     cin_v_nombre = db.Column(db.String(100), nullable=False)
-    cin_fk_ciu = db.Column(db.Integer, db.ForeignKey("ciudad.ciu_i_id "))
+    cin_fk_ciu = db.Column(db.Integer, db.ForeignKey("ciudad.ciu_i_id"))
 
 
 class CineSchema(ma.SQLAlchemyAutoSchema):

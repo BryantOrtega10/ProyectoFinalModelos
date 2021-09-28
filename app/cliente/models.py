@@ -5,8 +5,8 @@ class Cliente(db.Model):
     cli_v_nombre = db.Column(db.String(100), nullable=False)
     cli_v_foto = db.Column(db.String(200), nullable=True)
     cli_d_fecha_nacimiento = db.Column(db.Date, nullable=False)
-    cli_fk_ciu_i = db.Column(db.Integer, db.ForeignKey("ciudad.ciu_i_id "))
-    cli_fk_usr_i = db.Column(db.Integer, db.ForeignKey("usuario.id "))
+    cli_fk_ciu_i = db.Column(db.Integer, db.ForeignKey("ciudad.ciu_i_id"))
+    cli_fk_usr_i = db.Column(db.Integer, db.ForeignKey("usuario.id"))
 
 class ClienteSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

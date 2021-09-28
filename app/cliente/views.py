@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from flask import Blueprint, request, url_for
 import copy
-from app.cliente import crear_cliente, get_clientes, eliminar_cliente, modificar_cliente
+from app.cliente.models import crear_cliente, get_clientes, eliminar_cliente, modificar_cliente
 
 RESPONSE_BODY = {"message": "", "data": [], "errors": [], "metadata": []}
 cliente = Blueprint("cliente", __name__, url_prefix="/cliente")
