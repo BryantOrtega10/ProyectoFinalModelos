@@ -42,6 +42,20 @@
 
     </div>
 </section>
+<div class="modal fade" id="popup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+                <h5 id="titulo_popup">Errores</h5>
+                <ul id="listErrors"></ul>
+                <div class="text-center">
+                    <button id="cerrar_pop" type="button" class="btn btn-gen" data-bs-dismiss="modal">Cerrar</button>
+                    <a id="redirect_pop" class="btn btn-gen" href="#">Aceptar</a>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/login.js')}}"></script>
