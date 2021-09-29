@@ -1,12 +1,81 @@
 from http import HTTPStatus
-from flask import Blueprint, request
-from app.ciudad.models import crear_ciudad, get_ciudades, eliminar_ciudad, modificar_ciudad
+from flask import Blueprint, request, render_template, url_for, redirect
+from app.ciudad.models import crear_ciudad, get_ciudades, eliminar_ciudad, modificar_ciudad, ciudad_por_id
 from app.cine.models import obtener_cines_por_ciudad
 import copy
+from flask_login import login_required
 
 RESPONSE_BODY_DEFAULT = {"message": "", "data": [], "errors": []}
 ciudad = Blueprint("ciudad", __name__, url_prefix="/ciudad")
 
+@ciudad.route("/template", methods=["GET"])
+@login_required
+def template():
+    ciudades = get_ciudades()
+    return render_template('ciudad/index.html', ciudades = ciudades)
+
+@ciudad.route("/agregar", methods=["POST","GET"])
+@login_required
+def agregar():
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    if request.method == "POST":
+        if not "ciu_v_nombre" in request.json: 
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+
+        ciu_v_nombre = request.json["ciu_v_nombre"]
+        if ciu_v_nombre == "":
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+        else:
+            ciudad = crear_ciudad(ciu_v_nombre)
+            response_body["data"] = {"ciudad": ciudad, "redirect": url_for('ciudad.template')}
+            response_body["message"] = "Ciudad creada correctamente"
+        return response_body, status_code
+    else:
+        return render_template('ciudad/agregar.html')
+
+@ciudad.route("/editar/<id_ciudad>", methods=["POST","GET"])
+@login_required
+def editar(id_ciudad):
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    if request.method == "POST":
+        if not "ciu_v_nombre" in request.json: 
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+
+        ciu_v_nombre = request.json["ciu_v_nombre"]
+        if ciu_v_nombre == "":
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+        else:
+            ciudad = modificar_ciudad(id_ciudad, ciu_v_nombre)
+            response_body["data"] = {"ciudad": ciudad, "redirect": url_for('ciudad.template')}
+            response_body["message"] = "Ciudad editada correctamente"
+        return response_body, status_code
+    else:
+        ciudad = ciudad_por_id(id_ciudad)
+        return render_template('ciudad/editar.html', ciudad = ciudad, id = id)
+
+@ciudad.route("/quitar/<id_ciudad>", methods=["GET"])
+@login_required
+def quitar(id_ciudad):
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    if eliminar_ciudad(id_ciudad):
+        response_body["data"] = {"ciudad": ciudad, "redirect": url_for('ciudad.template')}
+        response_body["message"] = "Ciudad eliminada correctamente"
+    else:
+        response_body["errors"].append("La ciudad no existe")
+        status_code = HTTPStatus.BAD_REQUEST
+
+    return redirect(url_for('ciudad.template'))
 
 @ciudad.route("/", methods=["GET"])
 def index():
@@ -16,7 +85,6 @@ def index():
     response_body["message"] = "Ciudades consultadas correctamente!"
     response_body["data"] = ciudades
     return response_body, status_code
-
 
 @ciudad.route("/crear", methods=["POST"])
 def crear():
