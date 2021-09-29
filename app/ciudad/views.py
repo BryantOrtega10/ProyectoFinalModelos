@@ -61,18 +61,22 @@ def editar(id_ciudad):
         return response_body, status_code
     else:
         ciudad = ciudad_por_id(id_ciudad)
-        return render_template('ciudad/editar.html', ciudad = ciudad, id = id)
+        return render_template('ciudad/editar.html', ciudad = ciudad)
 
 @ciudad.route("/quitar/<id_ciudad>", methods=["GET"])
 @login_required
 def quitar(id_ciudad):
     response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
     status_code = HTTPStatus.OK
-    if eliminar_ciudad(id_ciudad):
-        response_body["data"] = {"ciudad": ciudad, "redirect": url_for('ciudad.template')}
-        response_body["message"] = "Ciudad eliminada correctamente"
+    if len(obtener_cines_por_ciudad(id_ciudad)) == 0:
+        if eliminar_ciudad(id_ciudad):
+            response_body["data"] = {"ciudad": ciudad, "redirect": url_for('ciudad.template')}
+            response_body["message"] = "Ciudad eliminada correctamente"
+        else:
+            response_body["errors"].append("La ciudad no existe")
+            status_code = HTTPStatus.BAD_REQUEST
     else:
-        response_body["errors"].append("La ciudad no existe")
+        response_body["errors"].append("La ciudad tiene datos relacionados")
         status_code = HTTPStatus.BAD_REQUEST
 
     return redirect(url_for('ciudad.template'))

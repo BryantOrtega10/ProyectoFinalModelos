@@ -23,11 +23,11 @@
                     </tr>
                   </thead>
                 <tbody>
-                {% for ciudad in ciudades %}
+                {% for cine in cines %}
                     <tr>
-                        <th scope="row">{{ciudad.ciu_v_nombre}}</th>
-                        <td><a href="{{url_for('ciudad.editar', id_ciudad=ciudad.ciu_i_id)}}"><i class="far fa-edit"></i></td></a>
-                        <td><a href="{{url_for('ciudad.quitar', id_ciudad=ciudad.ciu_i_id)}}"><i class="fas fa-trash-alt"></i></a></td>
+                        <th scope="row">{{cine.cin_v_nombre}}</th>
+                        <td><a href="{{url_for('cine.editar', id_cine=cine.cin_i_id)}}"><i class="far fa-edit"></i></td></a>
+                        <td><a href="{{url_for('cine.quitar', id_cine=cine.cin_i_id)}}"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                 
                 {% endfor %}
@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="offset-9 col-3 text-end">
-                <a class="btn btn-gen" href="{{url_for('ciudad.agregar')}}">Agregar Ciudad</a>
+                <a class="btn btn-gen" href="{{url_for('cine.agregar')}}">Agregar Cine</a>
             </div>
         </div>
     </div>

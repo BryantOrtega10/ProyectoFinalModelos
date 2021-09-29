@@ -2,6 +2,7 @@ from flask import Flask, redirect,url_for
 from app.auth.models import Usuario
 from app.cliente.views import cliente
 from app.ciudad.views import ciudad
+from app.cine.views import cine
 from app.db import db, ma
 from app.auth.views import auth
 from app.pelicula.views import pelicula
@@ -10,8 +11,8 @@ from conf.config import DevelpmentConfig
 from flask_cors import CORS
 from flask_login import LoginManager
 
-ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula)];
-SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad)]
+ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula)]
+SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad), ('/cine', cine)]
 
 def create_app(config=DevelpmentConfig):
     app = Flask(__name__)
