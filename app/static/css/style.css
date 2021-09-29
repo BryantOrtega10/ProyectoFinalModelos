@@ -156,7 +156,7 @@ ul.menu li a i {
     right: 10%;
 }
 
-ul.menu li a:hover {
+ul.menu li a.activo, ul.menu li a:hover {
     background-color: var(--color1);
 }
 
@@ -240,4 +240,8 @@ li.breadcrumb-item a {
     display: block;
     font-size: 15px;
     padding: 5px 20px;
+}
+
+form.formulario-general button {
+    margin-top: 60px;
 }

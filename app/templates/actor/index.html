@@ -1,0 +1,45 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Actor {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Actores</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-9 col-3 text-end">
+                <a class="btn btn-gen" href="{{url_for('actor.agregar')}}">Agregar actor</a>
+            </div>
+        </div>
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for actor in data.actores %}
+                <tr>
+                    <th scope="row">{{actor.act_i_id}}</th>
+                    <td>{{actor.act_v_nombre}}</td>
+                    <td>{{actor.act_v_apellido}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lista_general.js')}}"></script>
+{% endblock %}

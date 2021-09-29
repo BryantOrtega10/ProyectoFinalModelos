@@ -36,7 +36,14 @@
         <div class="col-2 px-0 contenedor-menu-horizontal activo">
             <nav class="menu-horizontal">
                 <ul class="menu">
-                    <li><a href="{{url_for('pelicula.index')}}">Peliculas</a></li>
+                    <li><a href="{{url_for('pelicula.index')}}" {% if 'pelicula' in request.path %} class="activo" {% endif %}>
+                            Peliculas
+                        </a>
+                    </li>
+                    <li><a href="{{url_for('actor.index')}}" {% if 'actor' in request.path %} class="activo" {% endif %}>
+                            Actores
+                        </a>
+                    </li>
                     <li>
                         <a href="#" data-bs-toggle="collapse" data-bs-target="#sub-menu1" aria-expanded="false">
                             Categoria <i class="fas fa-sort-down"></i>

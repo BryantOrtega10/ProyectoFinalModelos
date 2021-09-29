@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, url_for, redirect, request
 from flask_login import login_required
 import copy
 
+from app.actor.models import get_actores
+from app.pelicula.models import get_generos
 
 pelicula = Blueprint("pelicula", __name__, url_prefix="/pelicula")
 
@@ -41,4 +43,12 @@ def agregar():
         response_body["message"] = "Se agregó la película"
         return response_body, status_code
     else:
-        return render_template('pelicula/agregar.html')
+        generos = get_generos()
+        actores = get_actores()
+
+        data = {
+            "generos":generos,
+            "actores":actores
+        }
+
+        return render_template('pelicula/agregar.html', data=data)
