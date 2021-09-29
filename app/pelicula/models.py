@@ -45,7 +45,7 @@ class PeliculaActor(db.Model):
     fk_act_i_id = db.Column(db.Integer, db.ForeignKey("actor.act_i_id"))
 
 
-def get_generos():
+def obtener_generos():
     generos = Pelicula.query.all()
     genero_schema = GeneroSchema()
     generos = [genero_schema.dump(genero) for genero in generos]
@@ -80,7 +80,18 @@ def crear_pelicula_actor(pel_i_id, act_i_id):
     return True
 
 
-def get_peliculas():
+def eliminar_pelicula_actor(pel_i_id):
+    PeliculaActor.query.filter_by(fk_pel_i_id=pel_i_id).delete()
+    db.session.commit()
+    return True
+
+
+def cuenta_peliculas_por_actor(act_i_id):
+    peliculas = PeliculaActor.query.filter_by(fk_act_i_id=act_i_id).count()
+    return peliculas
+
+
+def obtener_peliculas():
     peliculas = Pelicula.query.all()
     pelicula_schema = PeliculaSchema()
     peliculas = [pelicula_schema.dump(pelicula) for pelicula in peliculas]

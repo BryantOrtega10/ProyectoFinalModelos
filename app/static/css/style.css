@@ -245,3 +245,87 @@ li.breadcrumb-item a {
 form.formulario-general button {
     margin-top: 60px;
 }
+
+
+a.a-rosa {
+    font-size: 1.5em;
+    color: var(--color1);
+}
+
+.formulario-general .form-floating .form-control {
+    margin-bottom: 1.5em;
+}
+
+
+label.upload-box-label {
+    font-size: 16px;
+    color: #9c9c9c;
+}
+
+.upload-box {
+    text-align: center;
+    background: #f6f6f6;
+    position: relative;
+    padding: 90px 0px;
+    border: 2px dashed #c6c6c6;
+    border-radius: 4px;
+    color: #BFBFBF;
+    user-select: none;
+    margin-bottom: 30px;
+}
+
+.upload-box input {
+    display: none;
+}
+
+.upload-box label, .upload-box button {
+    position: relative;
+    z-index: 9;
+}
+
+.upload-box:before {
+    content: "";
+    border: 10px solid #fff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+}
+
+.upload-box button.upload-btn {
+    background: linear-gradient(180deg, #FEFEFE 25.52%, #F1F1F1 100%);
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #DEDEDE;
+    color: #A9A9A9;
+    padding: 8px 20px;
+    font-weight: 500;
+    font-family: 'Roboto';
+    margin-top: 15px;
+}
+
+.upload-box button.upload-btn img {
+    margin-right: 5px;
+}
+
+.upload-box[drop-active]{
+    border-color: #000;
+}
+
+.col-preview img{
+    max-width: 100%;
+    max-height: 200px;
+}
+
+input#num_generos {
+    padding: 1rem .75rem;
+}
+
+.otro {
+    display: none;
+}
+.otro.activo {
+    display: block;
+}

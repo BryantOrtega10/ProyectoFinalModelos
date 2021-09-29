@@ -12,11 +12,22 @@ class ActorSchema(ma.SQLAlchemyAutoSchema):
         fields = ["act_i_id", "act_v_nombre", "act_v_apellido"]
 
 
-def get_actores():
+def obtener_actores():
     actores = Actor.query.all()
     actor_schema = ActorSchema()
     actores = [actor_schema.dump(actor) for actor in actores]
     return actores
+
+
+def obtener_actor_por_id(act_i_id):
+    actor = Actor.query.filter_by(act_i_id=act_i_id).first()
+    if actor != None:
+        actor_schema = ActorSchema()
+        actor = actor_schema.dump(actor)
+        return actor
+    else:
+        return None
+
 
 
 def crear_actor(nombre, apellido):

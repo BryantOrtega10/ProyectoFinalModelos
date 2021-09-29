@@ -26,7 +26,126 @@
                                 <label for="pel_v_titulo">T&iacute;tulo</label>
                             </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pel_v_director" name="pel_v_director" placeholder="Director">
+                                <label for="pel_v_director">Director</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="pel_i_duracion" name="pel_i_duracion" placeholder="Duraci&oacute;n (min)">
+                                <label for="pel_i_duracion">Duraci&oacute;n (min)</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="pel_d_estreno" name="pel_d_estreno" placeholder="Fecha de estreno">
+                                <label for="pel_d_estreno">Fecha de estreno</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pel_v_pais_origen" name="pel_v_pais_origen" placeholder="Pais origen">
+                                <label for="pel_v_pais_origen">Pais origen</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="number" min="0" class="form-control" id="pel_i_edad_minima" name="pel_i_edad_minima" placeholder="Edad minima">
+                                <label for="pel_i_edad_minima">Edad minima</label>
+                            </div>
+                        </div>
                     </div>
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <div class="row align-items-center" style="margin-bottom: 1.5em;">
+                                <div class="col-md-4 text-right"><label for="num_generos">Generos</label></div>
+                                <div class="col-md-2 text-center">
+                                    <a href="#" id="menos_gen" class="a-rosa"><i class="far fa-minus-square"></i></a>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <input type="text" class="form-control" name="num_generos" id="num_generos" value="1">
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <a href="#" id="mas_gen"  class="a-rosa"><i class="far fa-plus-square"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 generos">
+                            <div class="form-floating">
+                                <select class="form-control form-select select-otro" id="genero_1" name="genero_1" required="" >
+                                    <option selected>Seleccione uno</option>
+                                    {% for genero in data.generos %}
+                                        <option value="{{ genero.gen_i_id }}">{{genero.gen_v_nombre}}</option>
+                                    {% endfor %}
+                                    <option value="otro">Otro</option>
+                                 </select>
+                                <label for="genero_1">Genero 1</label>
+                                <div class="form-floating otro">
+                                    <input autocomplete="off" type="text" class="form-control " id="otro_genero_1" name="otro_genero_1" placeholder="Otro Genero 1" value="">
+                                    <label for="otro_genero_1">Otro Genero 1</label>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating">
+                              <textarea class="form-control" placeholder="Sinopsis" id="pel_t_sinopsis" name="pel_t_sinopsis" style="height: 100px"></textarea>
+                              <label for="pel_t_sinopsis">Sinopsis</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="pel_v_ruta_poster" class="upload-box-label">Foto poster</label>
+                            <div class="upload-box " id="box" data-input="pel_v_ruta_poster" data-input-data="pel_v_ruta_poster_data" data-preview="preview">
+                                    <img src="{{url_for('static', filename='imgs/drag_file.png')}}"><br>
+                                    Arrastra la foto<br>
+                                    o<br>
+                                <button type="button" class="upload-btn" data-input="pel_v_ruta_poster">
+                                    <img src="{{url_for('static', filename='imgs/upload.png')}}"> Seleccionar imagen
+                                </button>
+                                <input autocomplete="off" type="file" id="pel_v_ruta_poster">
+                                <input autocomplete="off" type="hidden" name="pel_v_ruta_poster_data" id="pel_v_ruta_poster_data">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-preview">
+                            <label for="preview">Vista previa poster</label><br>
+                            <img src="{{url_for('static', filename='imgs/no-image.png')}}" id="preview">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="pel_v_ruta_banner" class="upload-box-label">Banner</label>
+                            <div class="upload-box " id="box_banner" data-input="pel_v_ruta_banner" data-input-data="pel_v_ruta_banner_data" data-preview="preview_banner">
+                                    <img src="{{url_for('static', filename='imgs/drag_file.png')}}"><br>
+                                    Arrastra la foto<br>
+                                    o<br>
+                                <button type="button" class="upload-btn" data-input="pel_v_ruta_banner">
+                                    <img src="{{url_for('static', filename='imgs/upload.png')}}"> Seleccionar imagen
+                                </button>
+                                <input autocomplete="off" type="file" id="pel_v_ruta_banner">
+                                <input autocomplete="off" type="hidden" name="pel_v_ruta_banner_data" id="pel_v_ruta_banner_data">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-preview">
+                            <label for="preview_banner">Vista previa banner</label><br>
+                            <img src="{{url_for('static', filename='imgs/no-image.png')}}" id="preview_banner">
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <div class="offset-5 col-2">
                             <button class="btn btn-gen">Enviar</button>
@@ -39,4 +158,5 @@
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
+<script src="{{ url_for('static', filename='js/formulario_peliculas.js')}}"></script>
 {% endblock %}
