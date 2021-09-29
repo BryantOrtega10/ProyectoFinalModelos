@@ -1,0 +1,54 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Cines {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url_for('cine.template')}}">Cines</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <h1>Agregar Cines</h1>
+        <div class="row">
+            <div class="col-12">
+                <form action="{{url_for('cine.agregar')}}" method="post" class="formulario-general">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="cin_v_nombre" name="cin_v_nombre" placeholder="Nombre">
+                                <label for="cin_v_nombre">Nombre</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <select name="cin_fk_ciu" class="form-select" aria-label="Default select example">
+                                    <option value="" selected>Ciudades</option>
+                                    {% for ciudad in ciudades%}
+                                    <option value="{{ciudad.ciu_i_id}}">{{ciudad.ciu_v_nombre}}</option>
+                                     {% endfor%}
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-5 col-2">
+                            <button class="btn btn-gen">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
+{% endblock %}

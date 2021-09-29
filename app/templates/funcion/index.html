@@ -1,5 +1,5 @@
 {% extends "baseLogueado.html" %}
-{% block title %} Ciudades {% endblock %}
+{% block title %} Funciones {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -9,7 +9,7 @@
             <div class="col-12">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Ciudades</li>
+                    <li class="breadcrumb-item active" aria-current="page">Funciones</li>
                   </ol>
                 </nav>
             </div>
@@ -18,16 +18,15 @@
             <table class="table">
                 <thead>
                     <tr>
-                      <th scope="col">Nombre</th>
+                      <th scope="col">Fecha</th>
                       <th colspan="2" scope="col">Opciones</th>
                     </tr>
                   </thead>
                 <tbody>
-                {% for ciudad in ciudades %}
+                {% for funcion in funciones %}
                     <tr>
-                        <th scope="row">{{ciudad.ciu_v_nombre}}</th>
-                        <td><a href="{{url_for('ciudad.editar', id_ciudad=ciudad.ciu_i_id)}}"><i class="far fa-edit"></i></td></a>
-                        <td><a href="{{url_for('ciudad.quitar', id_ciudad=ciudad.ciu_i_id)}}"><i class="fas fa-trash-alt"></i></a></td>
+                        <th scope="row">{{ciudad.fun_dt_fecha_hora}}</th>
+                        <td><a href="{{url_for('funcion.editar', id_funcion=funcion.fun_i_id)}}"><i class="far fa-edit"></i></td></a>
                     </tr>
                 
                 {% endfor %}
@@ -36,7 +35,7 @@
         </div>
         <div class="row">
             <div class="offset-9 col-3 text-end">
-                <a class="btn btn-gen" href="{{url_for('ciudad.agregar')}}">Agregar Ciudad</a>
+                <a class="btn btn-gen" href="{{url_for('funcion.agregar')}}">Agregar Ciudad</a>
             </div>
         </div>
     </div>
