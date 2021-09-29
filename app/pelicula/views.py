@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, url_for, redirect, request
 from flask_login import login_required
 import copy
 
+from app.actor.models import obtener_actores
+from app.pelicula.models import obtener_generos
 
 pelicula = Blueprint("pelicula", __name__, url_prefix="/pelicula")
 
@@ -34,11 +36,16 @@ def agregar():
             status_code = HTTPStatus.BAD_REQUEST
             return response_body, status_code
 
-
-
-
         response_body["data"] = {"pel_v_titulo": pel_v_titulo, "redirect": url_for('pelicula.index')}
         response_body["message"] = "Se agregó la película"
         return response_body, status_code
     else:
-        return render_template('pelicula/agregar.html')
+        generos = obtener_generos()
+        actores = obtener_actores()
+
+        data = {
+            "generos":generos,
+            "actores":actores
+        }
+
+        return render_template('pelicula/agregar.html', data=data)

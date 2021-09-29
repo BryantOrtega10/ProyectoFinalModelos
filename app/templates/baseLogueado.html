@@ -36,7 +36,14 @@
         <div class="col-2 px-0 contenedor-menu-horizontal activo">
             <nav class="menu-horizontal">
                 <ul class="menu">
-                    <li><a href="{{url_for('pelicula.index')}}">Peliculas</a></li>
+                    <li><a href="{{url_for('pelicula.index')}}" {% if 'pelicula' in request.path %} class="activo" {% endif %}>
+                            Peliculas
+                        </a>
+                    </li>
+                    <li><a href="{{url_for('actor.index')}}" {% if 'actor' in request.path %} class="activo" {% endif %}>
+                            Actores
+                        </a>
+                    </li>
                     <li>
                         <a href="#" data-bs-toggle="collapse" data-bs-target="#sub-menu1" aria-expanded="false">
                             Categoria <i class="fas fa-sort-down"></i>
@@ -55,7 +62,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
     <div class="modal fade" id="popup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -72,6 +78,19 @@
     </div>
 
 
+    <div class="modal fade" id="popup_confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+                <h5 id="titulo_confirm"></h5>
+                <div class="text-center">
+                    <button id="cerrar_confirm" type="button" class="btn btn-gen" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="confirm_btn" class="btn btn-secondary" href="#">Aceptar</a>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/menu.js')}}"></script>
