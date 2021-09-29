@@ -3,6 +3,7 @@ from app.auth.models import Usuario
 from app.cliente.views import cliente
 from app.ciudad.views import ciudad
 from app.cine.views import cine
+from app.funcion.views import funcion
 from app.db import db, ma
 from app.auth.views import auth
 from app.pelicula.views import pelicula
@@ -12,7 +13,7 @@ from flask_cors import CORS
 from flask_login import LoginManager
 
 ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula)]
-SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad), ('/cine', cine)]
+SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad), ('/cine', cine), ('/funcion', funcion)]
 
 def create_app(config=DevelpmentConfig):
     app = Flask(__name__)

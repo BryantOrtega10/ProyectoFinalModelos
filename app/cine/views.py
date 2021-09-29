@@ -42,7 +42,7 @@ def agregar():
             return response_body, status_code
         else:
             cine = crear_cine(cin_v_nombre, cin_fk_ciu)
-            response_body["data"] = {"ciudad": cine, "redirect": url_for('cine.template')}
+            response_body["data"] = {"cine": cine, "redirect": url_for('cine.template')}
             response_body["message"] = "Cine creado correctamente"
         return response_body, status_code
     else:

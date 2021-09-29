@@ -1,0 +1,45 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Funciones {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Funciones</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th colspan="2" scope="col">Opciones</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                {% for funcion in funciones %}
+                    <tr>
+                        <th scope="row">{{ciudad.fun_dt_fecha_hora}}</th>
+                        <td><a href="{{url_for('funcion.editar', id_funcion=funcion.fun_i_id)}}"><i class="far fa-edit"></i></td></a>
+                    </tr>
+                
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="offset-9 col-3 text-end">
+                <a class="btn btn-gen" href="{{url_for('funcion.agregar')}}">Agregar Ciudad</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lista_general.js')}}"></script>
+{% endblock %}
