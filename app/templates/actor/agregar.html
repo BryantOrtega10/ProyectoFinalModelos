@@ -1,0 +1,49 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Actor {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url_for('actor.index')}}">Actores</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <h1>Agregar actor</h1>
+        <div class="row">
+            <div class="col-12">
+                <form action="{{url_for('actor.agregar')}}" method="post" class="formulario-general">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="act_v_nombre" name="act_v_nombre" placeholder="Nombre">
+                                <label for="act_v_nombre">Nombre</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="act_v_apellido" name="act_v_apellido" placeholder="Apellido">
+                                <label for="act_v_apellido">Apellido</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="offset-5 col-2">
+                            <button class="btn btn-gen">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
+{% endblock %}
