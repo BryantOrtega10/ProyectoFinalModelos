@@ -9,7 +9,7 @@
             <div class="col-12">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url_for('funciontemplate')}}">Funciones</a></li>
+                        <li class="breadcrumb-item"><a href="{{url_for('funcion.template')}}">Funciones</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Agregar</li>
                   </ol>
                 </nav>
@@ -23,7 +23,7 @@
                         <div class="col-3">
                             <div class="form-floating">
                                 <input type="datetime-local" class="form-control" id="fun_dt_fecha_hora" name="fun_dt_fecha_hora" placeholder="Fecha">
-                                <label for="ciu_v_nombre">Fecha</label>
+                                <label for="fun_dt_fecha_hora">Fecha</label>
                             </div>
                         </div>
                     </div>
@@ -34,6 +34,18 @@
                                     <option value="" selected>Salas</option>
                                     {% for sala in salas%}
                                     <option value="{{sala.sal_i_id}}">{{sala.sal_i_numero}}</option>
+                                     {% endfor%}
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <select name="cin_fk_ciu" class="form-select" aria-label="Default select example">
+                                    <option value="" selected>Salas</option>
+                                    {% for pelicula in peliculas%}
+                                    <option value="{{pelicula.peli_i_id}}">{{pelicula.peli_v_titulo}}</option>
                                      {% endfor%}
                                   </select>
                             </div>

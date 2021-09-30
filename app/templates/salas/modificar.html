@@ -1,0 +1,92 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Sala {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url_for('sala.index')}}">Salas</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Modificar</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <h1>Modificar sala</h1>
+        <div class="row">
+            <div class="col-12">
+                <form action="{{url_for('sala.editar', id=data.sala.sal_i_id)}}" method="post" class="formulario-general">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="sal_i_numero" name="sal_i_numero" placeholder="Numero sala" value="{{data.sala.sal_i_id}}">
+                                <label for="sal_i_numero">Numero sala</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <select class="form-control form-select" id="sal_fk_cin_i" name="sal_fk_cin_i" required="" >
+                                    <option selected value="">Seleccione uno</option>
+                                    {% for cine in data.cines %}
+                                        <option value="{{ cine.cin_i_id }}" {% if(data.sala.sal_fk_cin_i == cine.cin_i_id) %} selected {% endif %}>{{cine.cin_v_nombre}}</option>
+                                    {% endfor %}
+                                 </select>
+                                <label for="sal_fk_cin_i">Cine</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row align-items-center" style="margin-bottom: 1.5em;">
+                                <div class="col-md-4 text-right"><label for="num_cols">Columnas</label></div>
+                                <div class="col-md-2 text-center">
+                                    <a href="#" id="menos_col" class="a-gris"><i class="far fa-minus-square"></i></a>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <input type="number" min="1" class="form-control nums" name="num_cols" id="num_cols" value="{{data.sala.sillas[0]|length}}">
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <a href="#" id="mas_col"  class="a-rosa"><i class="far fa-plus-square"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="row align-items-center" style="margin-bottom: 1.5em;">
+                                <div class="col-md-4 text-right"><label for="num_filas">Filas</label></div>
+                                <div class="col-md-2 text-center">
+                                    <a href="#" id="menos_fil" class="a-gris"><i class="far fa-minus-square"></i></a>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <input type="number" min="1" class="form-control nums" name="num_filas" id="num_filas" value="{{data.sala.sillas|length}}">
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <a href="#" id="mas_fil"  class="a-rosa"><i class="far fa-plus-square"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="cont_grilla">
+                                <div id="grilla">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="sal_t_sillas" id="sal_t_sillas" value="{{data.sala.sal_t_sillas}}">
+                    <div class="row">
+                        <div class="offset-5 col-2">
+                            <button class="btn btn-gen">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
+<script src="{{ url_for('static', filename='js/formulario_salas.js')}}"></script>
+{% endblock %}
