@@ -10,49 +10,49 @@
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{url_for('pelicula.index')}}">Pel&iacute;culas</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+                        <li class="breadcrumb-item active" aria-current="page">Modificar</li>
                   </ol>
                 </nav>
             </div>
         </div>
-        <h1>Agregar pel&iacute;cula</h1>
+        <h1>Modificar pel&iacute;cula</h1>
         <div class="row">
             <div class="col-12">
-                <form action="{{url_for('pelicula.agregar')}}" method="post" class="formulario-general">
+                <form action="{{url_for('pelicula.modificar', id=data.pelicula.pel_i_id)}}" method="post" class="formulario-general">
                     <div class="row">
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pel_v_titulo" required name="pel_v_titulo" placeholder="T&iacute;tulo">
+                                <input type="text" class="form-control" id="pel_v_titulo" required name="pel_v_titulo" placeholder="T&iacute;tulo" value="{{data.pelicula.pel_v_titulo}}">
                                 <label for="pel_v_titulo">T&iacute;tulo</label>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pel_v_director" name="pel_v_director" placeholder="Director">
+                                <input type="text" class="form-control" id="pel_v_director" name="pel_v_director" placeholder="Director" value="{{data.pelicula.pel_v_director}}">
                                 <label for="pel_v_director">Director</label>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="pel_i_duracion" name="pel_i_duracion" placeholder="Duraci&oacute;n (min)">
+                                <input type="number" class="form-control" id="pel_i_duracion" name="pel_i_duracion" placeholder="Duraci&oacute;n (min)" value="{{data.pelicula.pel_i_duracion}}">
                                 <label for="pel_i_duracion">Duraci&oacute;n (min)</label>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="date" class="form-control" id="pel_d_estreno" name="pel_d_estreno" placeholder="Fecha de estreno">
+                                <input type="date" class="form-control" id="pel_d_estreno" name="pel_d_estreno" placeholder="Fecha de estreno" value="{{data.pelicula.pel_d_estreno}}">
                                 <label for="pel_d_estreno">Fecha de estreno</label>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pel_v_pais_origen" name="pel_v_pais_origen" placeholder="Pais origen">
+                                <input type="text" class="form-control" id="pel_v_pais_origen" name="pel_v_pais_origen" placeholder="Pais origen" value="{{data.pelicula.pel_v_pais_origen}}">
                                 <label for="pel_v_pais_origen">Pais origen</label>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="number" min="0" class="form-control" id="pel_i_edad_minima" name="pel_i_edad_minima" placeholder="Edad minima">
+                                <input type="number" min="0" class="form-control" id="pel_i_edad_minima" name="pel_i_edad_minima" placeholder="Edad minima" value="{{data.pelicula.pel_i_edad_minima}}">
                                 <label for="pel_i_edad_minima">Edad minima</label>
                             </div>
                         </div>
@@ -65,29 +65,31 @@
                                     <a href="#" id="menos_gen" class="a-gris"><i class="far fa-minus-square"></i></a>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <input type="text" class="form-control nums" name="num_generos" id="num_generos" value="1">
+                                    <input type="text" class="form-control" name="num_generos" id="num_generos" value="{{data.pelicula.generos | length }}">
                                 </div>
                                 <div class="col-md-2 text-center">
                                     <a href="#" id="mas_gen"  class="a-rosa"><i class="far fa-plus-square"></i></a>
                                 </div>
                             </div>
                         </div>
+                        {% for genero_p in data.pelicula.generos %}
                         <div class="col-md-3 generos">
                             <div class="form-floating">
-                                <select class="form-control form-select select-otro" id="genero_1" name="genero_1" required="" data-otro="otro_genero_1" >
+                                <select class="form-control form-select select-otro" id="genero_{{ loop.index }}" name="genero_{{ loop.index }}" required="" data-otro="otro_genero_{{ loop.index }}" >
                                     <option selected value="">Seleccione uno</option>
                                     {% for genero in data.generos %}
-                                        <option value="{{ genero.gen_i_id }}">{{genero.gen_v_nombre}}</option>
+                                        <option value="{{ genero.gen_i_id }}" {% if(genero.gen_i_id==genero_p.gen_i_id) %} selected {% endif %} >{{genero.gen_v_nombre}}</option>
                                     {% endfor %}
                                     <option value="otro">Otro</option>
                                  </select>
-                                <label for="genero_1">Genero 1</label>
+                                <label for="genero_{{ loop.index }}">Genero {{ loop.index }}</label>
                                 <div class="form-floating otro">
-                                    <input autocomplete="off" type="text" class="form-control " id="otro_genero_1" name="otro_genero_1" placeholder="Otro Genero 1" value="">
-                                    <label for="otro_genero_1">Otro Genero 1</label>
+                                    <input autocomplete="off" type="text" class="form-control " id="otro_genero_{{ loop.index }}" name="otro_genero_{{ loop.index }}" placeholder="Otro Genero {{ loop.index }}" value="">
+                                    <label for="otro_genero_{{ loop.index }}">Otro Genero {{ loop.index }}</label>
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                     <div class="row" id="cont_actores">
                         <div class="col-3">
@@ -97,29 +99,31 @@
                                     <a href="#" id="menos_act" class="a-gris"><i class="far fa-minus-square"></i></a>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <input type="text" class="form-control nums" name="num_actores" id="num_actores" value="1">
+                                    <input type="text" class="form-control" name="num_actores" id="num_actores" value="{{data.pelicula.actores | length }}">
                                 </div>
                                 <div class="col-md-2 text-center">
                                     <a href="#" id="mas_act"  class="a-rosa"><i class="far fa-plus-square"></i></a>
                                 </div>
                             </div>
                         </div>
+                        {% for actor_p in data.pelicula.actores %}
                         <div class="col-md-3 actores">
                             <div class="form-floating">
-                                <select class="form-control form-select" id="actor_1" name="actor_1" required="" >
+                                <select class="form-control form-select" id="actor_{{ loop.index }}" name="actor_{{ loop.index }}" required="" >
                                     <option selected value="">Seleccione uno</option>
                                     {% for actor in data.actores %}
-                                        <option value="{{ actor.act_i_id }}">{{actor.act_v_nombre}} {{actor.act_v_apellido}}</option>
+                                        <option value="{{ actor.act_i_id }}" {%if(actor_p.act_i_id == actor.act_i_id) %} selected {% endif %}>{{actor.act_v_nombre}} {{actor.act_v_apellido}}</option>
                                     {% endfor %}
                                  </select>
-                                <label for="actor_1">Actor 1</label>
+                                <label for="actor_{{ loop.index }}">Actor {{ loop.index }}</label>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-floating">
-                              <textarea class="form-control" placeholder="Sinopsis" id="pel_t_sinopsis" name="pel_t_sinopsis" style="height: 100px"></textarea>
+                              <textarea class="form-control" placeholder="Sinopsis" id="pel_t_sinopsis" name="pel_t_sinopsis" style="height: 100px">{{data.pelicula.pel_t_sinopsis}}</textarea>
                               <label for="pel_t_sinopsis">Sinopsis</label>
                             </div>
                         </div>
@@ -142,8 +146,10 @@
                     <div class="row">
                         <div class="col-12 col-preview">
                             <label for="preview">Vista previa poster</label><br>
-                            <img src="{{url_for('static', filename='imgs/no-image.png')}}" id="preview">
+                            <img src="{{ url_for('static', filename='peliculas/'+data.pelicula.pel_v_ruta_poster)}}" id="preview">
                         </div>
+
+
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -163,7 +169,7 @@
                     <div class="row">
                         <div class="col-12 col-preview">
                             <label for="preview_banner">Vista previa banner</label><br>
-                            <img src="{{url_for('static', filename='imgs/no-image.png')}}" id="preview_banner">
+                            <img src="{{ url_for('static', filename='peliculas/'+data.pelicula.pel_v_ruta_banner)}}" id="preview_banner">
                         </div>
                     </div>
 
