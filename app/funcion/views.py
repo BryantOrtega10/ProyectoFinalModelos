@@ -3,7 +3,7 @@ from flask import Blueprint, request, render_template, url_for, redirect
 from app.funcion.models import crear_funcion, get_funciones, eliminar_funcion, modificar_funcion, funcion_por_id
 from app.sala.models import get_salas
 from app.reserva.models import obtener_reservas_por_funcion
-from app.pelicula.models import get_peliculas
+from app.pelicula.models import obtener_peliculas
 import copy
 from datetime import datetime
 from flask_login import login_required
@@ -69,7 +69,7 @@ def agregar():
         return response_body, status_code
     else:
         salas = get_salas()
-        peliculas = get_peliculas()
+        peliculas = obtener_peliculas()
         return render_template('funcion/agregar.html', salas = salas, peliculas = peliculas)
 
 @funcion.route("/editar/<id_funcion>", methods=["POST","GET"])
@@ -104,13 +104,13 @@ def editar(id_funcion):
         funcion = funcion_por_id(id_funcion)
         return render_template('cine/editar.html', funcion = funcion)
 
-@ciudad.route("/quitar/<id_funcion>", methods=["GET"])
+@funcion.route("/quitar/<id_funcion>", methods=["GET"])
 @login_required
-def quitar(id_ciudad):
+def quitar(fun_i_id):
     response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
     status_code = HTTPStatus.OK
     if len(obtener_reservas_por_funcion(fun_i_id)) == 0:
-        if eliminar_funcion(id_ciudad):
+        if eliminar_funcion(fun_i_id):
             response_body["data"] = {"funcion": funcion, "redirect": url_for('funcion.template')}
             response_body["message"] = "Funcion eliminada correctamente"
         else:

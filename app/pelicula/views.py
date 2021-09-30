@@ -71,6 +71,10 @@ def agregar():
             response_body["errors"].append("Campo edad minima es requerido")
             status_code = HTTPStatus.BAD_REQUEST
             return response_body, status_code
+        if not "pel_i_estado" in request.json:
+            response_body["errors"].append("Campo estado película es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
 
         pel_v_titulo = request.json["pel_v_titulo"]
         pel_t_sinopsis = request.json["pel_t_sinopsis"]
@@ -81,6 +85,7 @@ def agregar():
         pel_v_ruta_banner = request.json["pel_v_ruta_banner_data"]
         pel_v_pais_origen = request.json["pel_v_pais_origen"]
         pel_i_edad_minima = request.json["pel_i_edad_minima"]
+        pel_i_estado = request.json["pel_i_estado"]
 
 
         if pel_v_titulo == "":
@@ -117,6 +122,10 @@ def agregar():
             return response_body, status_code
         if pel_i_edad_minima == "":
             response_body["errors"].append("Campo edad minima es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+        if pel_i_estado == "":
+            response_body["errors"].append("Campo estado película es requerido")
             status_code = HTTPStatus.BAD_REQUEST
             return response_body, status_code
 
@@ -161,7 +170,7 @@ def agregar():
 
         pelicula = crear_pelicula(pel_v_titulo, pel_t_sinopsis, pel_v_director,
                                   pel_i_duracion, fecha_estreno, ruta_poster,
-                                  ruta_banner, pel_v_pais_origen, pel_i_edad_minima)
+                                  ruta_banner, pel_v_pais_origen, pel_i_edad_minima, pel_i_estado)
 
         num_generos = int(request.json["num_generos"])
         for n_genero in range(1,num_generos + 1):
@@ -287,6 +296,11 @@ def modificar(id):
             status_code = HTTPStatus.BAD_REQUEST
             return response_body, status_code
 
+        if not "pel_i_estado" in request.json:
+            response_body["errors"].append("Campo estado película es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+
         pel_v_titulo = request.json["pel_v_titulo"]
         pel_t_sinopsis = request.json["pel_t_sinopsis"]
         pel_v_director = request.json["pel_v_director"]
@@ -294,6 +308,7 @@ def modificar(id):
         pel_d_estreno = request.json["pel_d_estreno"]
         pel_v_pais_origen = request.json["pel_v_pais_origen"]
         pel_i_edad_minima = request.json["pel_i_edad_minima"]
+        pel_i_estado = request.json["pel_i_estado"]
 
 
         if pel_v_titulo == "":
@@ -324,7 +339,10 @@ def modificar(id):
             response_body["errors"].append("Campo edad minima es requerido")
             status_code = HTTPStatus.BAD_REQUEST
             return response_body, status_code
-
+        if pel_i_estado == "":
+            response_body["errors"].append("Campo estado película es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
 
 
         ruta_poster = pelicula["pel_v_ruta_poster"]
@@ -375,7 +393,7 @@ def modificar(id):
 
         pelicula = modificar_pelicula(id, pel_v_titulo, pel_t_sinopsis, pel_v_director,
                                   pel_i_duracion, fecha_estreno, ruta_poster,
-                                  ruta_banner, pel_v_pais_origen, pel_i_edad_minima)
+                                  ruta_banner, pel_v_pais_origen, pel_i_edad_minima, pel_i_estado)
 
         eliminar_pelicula_genero(id)
         num_generos = int(request.json["num_generos"])

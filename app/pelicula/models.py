@@ -25,6 +25,7 @@ class Pelicula(db.Model):
     pel_v_ruta_banner = db.Column(db.String(200), nullable=False)
     pel_v_pais_origen = db.Column(db.String(45), nullable=False)
     pel_i_edad_minima = db.Column(db.Integer, nullable=False)
+    pel_i_estado = db.Column(db.Integer, nullable=False)
 
 
 class PeliculaSchema(ma.SQLAlchemyAutoSchema):
@@ -32,7 +33,7 @@ class PeliculaSchema(ma.SQLAlchemyAutoSchema):
         model = Pelicula
         fields = ["pel_i_id", "pel_v_titulo", "pel_t_sinopsis", "pel_v_director",
                   "pel_i_duracion", "pel_d_estreno", "pel_v_ruta_poster",
-                  "pel_v_ruta_banner", "pel_v_pais_origen", "pel_i_edad_minima"]
+                  "pel_v_ruta_banner", "pel_v_pais_origen", "pel_i_edad_minima","pel_i_estado"]
 
 
 class PeliculaGenero(db.Model):
@@ -127,10 +128,10 @@ def obtener_peliculas():
     return peliculas
 
 
-def crear_pelicula(titulo, sinopsis, director, duracion, estreno, ruta_poster, ruta_banner, pais_origen, edad_minima):
+def crear_pelicula(titulo, sinopsis, director, duracion, estreno, ruta_poster, ruta_banner, pais_origen, edad_minima, estado):
     pelicula = Pelicula(pel_v_titulo=titulo, pel_t_sinopsis=sinopsis, pel_v_director=director,
                         pel_i_duracion=duracion, pel_d_estreno=estreno, pel_v_ruta_poster=ruta_poster,
-                        pel_v_ruta_banner=ruta_banner, pel_v_pais_origen=pais_origen, pel_i_edad_minima=edad_minima)
+                        pel_v_ruta_banner=ruta_banner, pel_v_pais_origen=pais_origen, pel_i_edad_minima=edad_minima, pel_i_estado=estado)
     db.session.add(pelicula)
     db.session.commit()
     pelicula_schema = PeliculaSchema()
@@ -147,7 +148,7 @@ def eliminar_pelicula(id):
         return False
 
 
-def modificar_pelicula(id, titulo, sinopsis, director, duracion, estreno, ruta_poster, ruta_banner, pais_origen, edad_minima):
+def modificar_pelicula(id, titulo, sinopsis, director, duracion, estreno, ruta_poster, ruta_banner, pais_origen, edad_minima, estado):
     pelicula = Pelicula.query.filter_by(pel_i_id=id).first()
     if pelicula != None:
         pelicula.pel_v_titulo = titulo
@@ -159,6 +160,7 @@ def modificar_pelicula(id, titulo, sinopsis, director, duracion, estreno, ruta_p
         pelicula.pel_v_ruta_banner = ruta_banner
         pelicula.pel_v_pais_origen = pais_origen
         pelicula.pel_i_edad_minima = edad_minima
+        pelicula.pel_i_estado = estado
         db.session.commit()
         pelicula_schema = PeliculaSchema()
         return pelicula_schema.dump(pelicula)

@@ -26,6 +26,7 @@ def agregar():
             return response_body, status_code
 
         ciu_v_nombre = request.json["ciu_v_nombre"]
+
         if ciu_v_nombre == "":
             response_body["errors"].append("Campo nombre es requerido")
             status_code = HTTPStatus.BAD_REQUEST

@@ -26,19 +26,19 @@
                                 <label for="cin_v_nombre">Nombre</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-3">
                             <div class="form-floating">
-                                <select name="cin_fk_ciu" class="form-select" aria-label="Default select example">
-                                    <option value="" selected>Ciudades</option>
+                                <select name="cin_fk_ciu" id="cin_fk_ciu" class="form-select" aria-label="Default select example">
+                                    <option value="" selected>Seleccione uno</option>
                                     {% for ciudad in ciudades%}
                                     <option value="{{ciudad.ciu_i_id}}">{{ciudad.ciu_v_nombre}}</option>
                                      {% endfor%}
                                   </select>
+                                <label for="cin_fk_ciu">Ciudad</label>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="offset-5 col-2">
                             <button class="btn btn-gen">Enviar</button>
