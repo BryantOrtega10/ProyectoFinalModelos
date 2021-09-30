@@ -1,10 +1,92 @@
 from http import HTTPStatus
-from flask import Blueprint, request
-from app.cine.models import crear_cine, get_cines, eliminar_cine, modificar_cine
+from flask import Blueprint, request, render_template, url_for, redirect
+from app.cine.models import crear_cine, get_cines, eliminar_cine, modificar_cine, cine_por_id
+from app.ciudad.models import get_ciudades
 import copy
+from flask_login import login_required
 
 RESPONSE_BODY_DEFAULT = {"message": "", "data": [], "errors": []}
 cine = Blueprint("cine", __name__, url_prefix="/cine")
+
+@cine.route("/template", methods=["GET"])
+@login_required
+def template():
+    cines = get_cines()
+    return render_template("cine/index.html", cines = cines)
+
+@cine.route("/agregar", methods=["POST","GET"])
+@login_required
+def agregar():
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    if request.method == "POST":
+        if not "cin_v_nombre" in request.json: 
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code  
+        if not "cin_fk_ciu" in request.json:
+            response_body["errors"].append("Debe escoger una ciudad")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code   
+
+        cin_v_nombre = request.json["cin_v_nombre"]
+        cin_fk_ciu = request.json["cin_fk_ciu"]
+
+        if cin_v_nombre == "":
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+        if cin_fk_ciu == "":
+            response_body["errors"].append("Debe escoger una ciudad")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+        else:
+            cine = crear_cine(cin_v_nombre, cin_fk_ciu)
+            response_body["data"] = {"cine": cine, "redirect": url_for('cine.template')}
+            response_body["message"] = "Cine creado correctamente"
+        return response_body, status_code
+    else:
+        ciudades = get_ciudades()
+        return render_template('cine/agregar.html', ciudades = ciudades)
+
+@cine.route("/editar/<id_cine>", methods=["POST","GET"])
+@login_required
+def editar(id_cine):
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    if request.method == "POST":
+        if not "cin_v_nombre" in request.json: 
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+
+        cin_v_nombre = request.json["cin_v_nombre"]
+        if cin_v_nombre == "":
+            response_body["errors"].append("Campo nombre es requerido")
+            status_code = HTTPStatus.BAD_REQUEST
+            return response_body, status_code
+        else:
+            cine = modificar_cine(id_cine, cin_v_nombre)
+            response_body["data"] = {"cine": cine, "redirect": url_for('cine.template')}
+            response_body["message"] = "Cine editado correctamente"
+        return response_body, status_code
+    else:
+        cine = cine_por_id(id_cine)
+        return render_template('cine/editar.html', cine = cine)
+
+@cine.route("/quitar/<id_cine>", methods=["GET"])
+@login_required
+def quitar(id_cine):
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    if eliminar_cine(id_cine):
+        response_body["data"] = {"cine": cine, "redirect": url_for('cine.template')}
+        response_body["message"] = "Cine eliminado correctamente"
+    else:
+        response_body["errors"].append("El cine no existe")
+        status_code = HTTPStatus.BAD_REQUEST
+
+    return redirect(url_for('cine.template'))
 
 @cine.route("/", methods=["GET"])
 def index():

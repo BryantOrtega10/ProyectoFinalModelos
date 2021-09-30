@@ -44,16 +44,13 @@
                             Actores
                         </a>
                     </li>
-                    <li>
-                        <a href="#" data-bs-toggle="collapse" data-bs-target="#sub-menu1" aria-expanded="false">
-                            Categoria <i class="fas fa-sort-down"></i>
+                    <li><a href="{{url_for('sala.template')}}" {% if 'sala' in request.path %} class="activo" {% endif %}>
+                            Salas
                         </a>
-                        <ul class="sub-menu collapse" id="sub-menu1">
-                            <li><a href="#">Sub Categoria 1</a></li>
-                            <li><a href="#">Sub Categoria 2</a></li>
-                            <li><a href="#">Sub Categoria 3</a></li>
-                        </ul>
                     </li>
+                    <li><a href="{{url_for('ciudad.template')}}" {% if 'ciudad' in request.path %} class="activo" {% endif %}>Ciudades</a></li>
+                    <li><a href="{{url_for('cine.template')}}" {% if 'cine' in request.path %} class="activo" {% endif %}>Cines</a></li>
+                    <li><a href="{{url_for('funcion.template')}}" {% if 'funcion' in request.path %} class="activo" {% endif %}>Funciones</a></li>
                 </ul>
             </nav>
         </div>

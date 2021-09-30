@@ -1,24 +1,31 @@
+import os
 from flask import Flask, redirect,url_for
-
 from app.actor.views import actor
 from app.auth.models import Usuario
 from app.cliente.views import cliente
 from app.ciudad.views import ciudad
+from app.cine.views import cine
+from app.funcion.views import funcion
 from app.db import db, ma
 from app.auth.views import auth
 from app.pelicula.views import pelicula
 from flask_migrate import Migrate
+
+from app.sala.views import sala
 from conf.config import DevelpmentConfig
 from flask_cors import CORS
 from flask_login import LoginManager
 
-ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula), ('/actor', actor)];
-SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad)]
+
+
+ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula), ('/actor', actor), ('/sala',sala)]
+SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad), ('/cine', cine), ('/funcion', funcion)]
 
 def create_app(config=DevelpmentConfig):
     app = Flask(__name__)
     migrate = Migrate(app, db)
     app.config.from_object(config)
+
 
     CORS(app)
     db.init_app(app)
