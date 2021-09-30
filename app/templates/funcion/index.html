@@ -27,6 +27,7 @@
                     <tr>
                         <th scope="row">{{ciudad.fun_dt_fecha_hora}}</th>
                         <td><a href="{{url_for('funcion.editar', id_funcion=funcion.fun_i_id)}}"><i class="far fa-edit"></i></td></a>
+                        <td><a href="{{url_for('funcion.quitar', id_funcion=funcion.fun_i_id)}}"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                 
                 {% endfor %}
@@ -35,7 +36,7 @@
         </div>
         <div class="row">
             <div class="offset-9 col-3 text-end">
-                <a class="btn btn-gen" href="{{url_for('funcion.agregar')}}">Agregar Ciudad</a>
+                <a class="btn btn-gen" href="{{url_for('funcion.agregar')}}">Agregar Funcion</a>
             </div>
         </div>
     </div>
