@@ -1,4 +1,6 @@
+from app.actor.models import Actor, ActorSchema
 from app.db import db, ma
+from app.funcion.models import Funcion
 
 
 class Genero(db.Model):
@@ -46,7 +48,7 @@ class PeliculaActor(db.Model):
 
 
 def obtener_generos():
-    generos = Pelicula.query.all()
+    generos = Genero.query.all()
     genero_schema = GeneroSchema()
     generos = [genero_schema.dump(genero) for genero in generos]
     return generos
@@ -89,6 +91,33 @@ def eliminar_pelicula_actor(pel_i_id):
 def cuenta_peliculas_por_actor(act_i_id):
     peliculas = PeliculaActor.query.filter_by(fk_act_i_id=act_i_id).count()
     return peliculas
+
+
+def cuenta_funciones_por_pelicula(pel_i_id):
+    funciones = Funcion.query.filter_by(fun_fk_pel_i=pel_i_id).count()
+    return funciones
+
+
+
+
+def obtener_actores_por_pelicula(pel_i_id):
+    actores = db.session.query(Actor) \
+    .join(PeliculaActor, PeliculaActor.fk_act_i_id==Actor.act_i_id)\
+    .filter(PeliculaActor.fk_pel_i_id==pel_i_id).all()
+
+    actor_schema = ActorSchema()
+    actores = [actor_schema.dump(actor) for actor in actores]
+    return actores
+
+
+def obtener_generos_por_pelicula(pel_i_id):
+    generos = db.session.query(Genero) \
+    .join(PeliculaGenero, PeliculaGenero.fk_gen_i_id==Genero.gen_i_id)\
+    .filter(PeliculaGenero.fk_pel_i_id==pel_i_id).all()
+
+    genero_schema = GeneroSchema()
+    generos = [genero_schema.dump(genero) for genero in generos]
+    return generos
 
 
 def obtener_peliculas():
@@ -134,3 +163,13 @@ def modificar_pelicula(id, titulo, sinopsis, director, duracion, estreno, ruta_p
         pelicula_schema = PeliculaSchema()
         return pelicula_schema.dump(pelicula)
     return None
+
+
+def obtener_pelicula_por_id(pel_i_id):
+    pelicula = Pelicula.query.filter_by(pel_i_id=pel_i_id).first()
+    if pelicula != None:
+        pelicula_schema = PeliculaSchema()
+        pelicula = pelicula_schema.dump(pelicula)
+        return pelicula
+    else:
+        return None

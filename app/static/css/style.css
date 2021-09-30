@@ -319,7 +319,7 @@ label.upload-box-label {
     max-height: 200px;
 }
 
-input#num_generos {
+input#num_generos, input#num_actores {
     padding: 1rem .75rem;
 }
 
@@ -328,4 +328,26 @@ input#num_generos {
 }
 .otro.activo {
     display: block;
+}
+
+.a-gris{
+    color: var(--color-fondo1);
+    font-size: 1.5em;
+}
+
+.card-deck .card {
+    width: 23%;
+}
+
+.card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: space-between;
 }
