@@ -1,0 +1,42 @@
+{% extends "baseLogueado.html" %}
+{% block title %} Funciones {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url_for('funcion.template')}}">Ciudades</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <h1>Editar Ciudades</h1>
+        <div class="row">
+            <div class="col-12">
+                <form action="{{url_for('funcion.editar', id_funcion=funcion.fun_i_id)}}" method="post" class="formulario-general">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-floating">
+                                <input type="datetime-local" class="form-control" id="fun_dt_fecha_hora" name="fun_dt_fecha_hora" placeholder="Fecha" value="{{funcion.fun_dt_fecha_hora}}">
+                                <label for="fun_dt_fecha_hora">Nombre</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-5 col-2">
+                            <button class="btn btn-gen">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
+{% endblock %}
