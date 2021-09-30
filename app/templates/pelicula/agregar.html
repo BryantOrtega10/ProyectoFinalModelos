@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pel_v_titulo" required name="pel_v_titulo" placeholder="T&iacute;tulo">
+                                <input type="text" class="form-control" id="pel_v_titulo" name="pel_v_titulo" placeholder="T&iacute;tulo">
                                 <label for="pel_v_titulo">T&iacute;tulo</label>
                             </div>
                         </div>
@@ -56,27 +56,16 @@
                                 <label for="pel_i_edad_minima">Edad minima</label>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="form-floating">
-                                <select class="form-control form-select" id="pel_i_estado" name="pel_i_estado" required="">
-                                    <option value="">Seleccione uno</option>
-                                    <option value="1">En cartelera</option>
-                                    <option value="2">En estreno</option>
-                                    <option value="3">Fuera de cartelera</option>
-                                 </select>
-                                <label for="pel_i_estado">Estado </label>
-                            </div>
-                        </div>
                     </div>
-                    <div class="row" id="cont_generos">
+                    <div class="row align-items-center">
                         <div class="col-3">
                             <div class="row align-items-center" style="margin-bottom: 1.5em;">
                                 <div class="col-md-4 text-right"><label for="num_generos">Generos</label></div>
                                 <div class="col-md-2 text-center">
-                                    <a href="#" id="menos_gen" class="a-gris"><i class="far fa-minus-square"></i></a>
+                                    <a href="#" id="menos_gen" class="a-rosa"><i class="far fa-minus-square"></i></a>
                                 </div>
                                 <div class="col-md-4 text-center">
-                                    <input type="text" class="form-control nums" name="num_generos" id="num_generos" value="1">
+                                    <input type="text" class="form-control" name="num_generos" id="num_generos" value="1">
                                 </div>
                                 <div class="col-md-2 text-center">
                                     <a href="#" id="mas_gen"  class="a-rosa"><i class="far fa-plus-square"></i></a>
@@ -85,8 +74,8 @@
                         </div>
                         <div class="col-md-3 generos">
                             <div class="form-floating">
-                                <select class="form-control form-select select-otro" id="genero_1" name="genero_1" required="" data-otro="otro_genero_1" >
-                                    <option selected value="">Seleccione uno</option>
+                                <select class="form-control form-select select-otro" id="genero_1" name="genero_1" required="" >
+                                    <option selected>Seleccione uno</option>
                                     {% for genero in data.generos %}
                                         <option value="{{ genero.gen_i_id }}">{{genero.gen_v_nombre}}</option>
                                     {% endfor %}
@@ -97,36 +86,14 @@
                                     <input autocomplete="off" type="text" class="form-control " id="otro_genero_1" name="otro_genero_1" placeholder="Otro Genero 1" value="">
                                     <label for="otro_genero_1">Otro Genero 1</label>
                                 </div>
+
                             </div>
+
+
+
                         </div>
                     </div>
-                    <div class="row" id="cont_actores">
-                        <div class="col-3">
-                            <div class="row align-items-center" style="margin-bottom: 1.5em;">
-                                <div class="col-md-4 text-right"><label for="num_actores">Actores</label></div>
-                                <div class="col-md-2 text-center">
-                                    <a href="#" id="menos_act" class="a-gris"><i class="far fa-minus-square"></i></a>
-                                </div>
-                                <div class="col-md-4 text-center">
-                                    <input type="text" class="form-control nums" name="num_actores" id="num_actores" value="1">
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <a href="#" id="mas_act"  class="a-rosa"><i class="far fa-plus-square"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 actores">
-                            <div class="form-floating">
-                                <select class="form-control form-select" id="actor_1" name="actor_1" required="" >
-                                    <option selected value="">Seleccione uno</option>
-                                    {% for actor in data.actores %}
-                                        <option value="{{ actor.act_i_id }}">{{actor.act_v_nombre}} {{actor.act_v_apellido}}</option>
-                                    {% endfor %}
-                                 </select>
-                                <label for="actor_1">Actor 1</label>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="form-floating">
@@ -145,7 +112,7 @@
                                 <button type="button" class="upload-btn" data-input="pel_v_ruta_poster">
                                     <img src="{{url_for('static', filename='imgs/upload.png')}}"> Seleccionar imagen
                                 </button>
-                                <input autocomplete="off" accept="image/*" type="file" id="pel_v_ruta_poster">
+                                <input autocomplete="off" type="file" id="pel_v_ruta_poster">
                                 <input autocomplete="off" type="hidden" name="pel_v_ruta_poster_data" id="pel_v_ruta_poster_data">
                             </div>
                         </div>
@@ -166,7 +133,7 @@
                                 <button type="button" class="upload-btn" data-input="pel_v_ruta_banner">
                                     <img src="{{url_for('static', filename='imgs/upload.png')}}"> Seleccionar imagen
                                 </button>
-                                <input autocomplete="off" accept="image/*" type="file" id="pel_v_ruta_banner">
+                                <input autocomplete="off" type="file" id="pel_v_ruta_banner">
                                 <input autocomplete="off" type="hidden" name="pel_v_ruta_banner_data" id="pel_v_ruta_banner_data">
                             </div>
                         </div>

@@ -1,23 +1,4 @@
 window.addEventListener("load", (e) => {
-
-     document.body.addEventListener("change", function (event) {
-        if (event.target.classList.contains("select-otro")) {
-            let otro = event.target.getAttribute('data-otro');
-            let otroElem = document.querySelector("#"+otro).parentNode;
-
-            if(event.target.value == "otro"){
-                otroElem.classList.add('activo');
-            }
-            else{
-                otroElem.classList.remove('activo');
-            }
-
-
-        }
-    });
-
-
-
     document.querySelector(".formulario-general").addEventListener("submit", (e) => {
         e.preventDefault();
         let formData = new FormData(e.srcElement);

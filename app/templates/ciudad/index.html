@@ -19,27 +19,6 @@
                 <a class="btn btn-gen" href="{{url_for('ciudad.agregar')}}">Agregar Ciudad</a>
             </div>
         </div>
-        <div class="row">
-            <table class="table">
-                <thead>
-                    <tr>
-                      <th scope="col">Nombre</th>
-                      <th colspan="2" scope="col">Opciones</th>
-                    </tr>
-                  </thead>
-                <tbody>
-                {% for ciudad in ciudades %}
-                    <tr>
-                        <th scope="row">{{ciudad.ciu_v_nombre}}</th>
-                        <td><a href="{{url_for('ciudad.editar', id_ciudad=ciudad.ciu_i_id)}}"  class="a-rosa"><i class="far fa-edit"></i></td></a>
-                        <td><a href="{{url_for('ciudad.quitar', id_ciudad=ciudad.ciu_i_id)}}" class="a-rosa eliminar" data-msj="esta ciudad"><i class="fas fa-trash-alt"></i></a></td>
-                    </tr>
-                
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
     </div>
 {% endblock %}
 {% block scripts %}

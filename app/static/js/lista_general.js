@@ -9,14 +9,5 @@ window.addEventListener("load", (e) => {
             document.getElementById('confirm_btn').href = url_red;
             confirm.show();
         }
-        else if (event.target.classList.contains("eliminar")) {
-            event.preventDefault();
-            let confirm = new bootstrap.Modal(document.getElementById('popup_confirm'));
-            let msj = event.target.getAttribute("data-msj");
-            let url_red = event.target.getAttribute("href");
-            document.getElementById('titulo_confirm').innerHTML = "En verdad desea eliminar " + msj + "?";
-            document.getElementById('confirm_btn').href = url_red;
-            confirm.show();
-        }
     });
 });

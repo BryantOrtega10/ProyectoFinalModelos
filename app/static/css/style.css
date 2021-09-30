@@ -319,7 +319,7 @@ label.upload-box-label {
     max-height: 200px;
 }
 
-input.nums {
+input#num_generos {
     padding: 1rem .75rem;
 }
 
@@ -329,68 +329,3 @@ input.nums {
 .otro.activo {
     display: block;
 }
-
-.a-gris{
-    color: var(--color-fondo1);
-    font-size: 1.5em;
-}
-
-.card-deck .card {
-    width: 23%;
-}
-
-.card-deck {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    padding-top: 50px;
-}
-
-.card-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.cont_grilla {
-    padding: 40px 30px;
-    background: #f0f0f0;
-}
-
-div#grilla {
-    display: grid;
-    grid-gap: 10px;
-}
-
-div#grilla>div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-div#grilla>div.celda {
-    border: 3px solid #25b136;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-}
-
-div#grilla>div.celda.preferencial {
-    border-color: #ff8d00;
-}
-
-div#grilla>div.celda.discapacitados {
-    border-color: #1865a1;
-    background: url(../imgs/discapacitado.png);
-    color: transparent;
-    background-size: 50%;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-div#grilla>div.celda.vacia {
-    color: transparent;
-    border-color: transparent;
-    user-select: none;
-}
-

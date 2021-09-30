@@ -12,7 +12,7 @@ class CineSchema(ma.SQLAlchemyAutoSchema):
         fields = ["cin_i_id", "cin_v_nombre", "cin_fk_ciu"]
 
 def obtener_cines_por_ciudad(ciu_i_id):
-    cines = Cine.query.filter_by(cin_fk_ciu=ciu_i_id).all()
+    cines = Cine.filter_by(cin_fk_ciu=ciu_i_id).all()
     cine_schema = CineSchema()
     cines = [cine_schema.dump(cine) for cine in cines]
     return cines
@@ -32,26 +32,19 @@ def crear_cine(nombre, fk_ciu):
     return cine_schema.dump(cine)
 
 def eliminar_cine(id):
-    cine = Cine.query.filter_by(cin_i_id=id).first()
+    cine = Cine.filter_by(cin_i_id=id).first()
     if cine != None:
-        Cine.query.filter_by(cin_i_id=id).delete()
+        Cine.filter_by(cin_i_id=id).delete()
         db.session.commit()
         return True
     else:
         return False
 
 def modificar_cine(id, nombre):
-    cine = Cine.query.filter_by(cin_i_id=id).first()
+    cine = Cine.filter_by(cin_i_id=id).first()
     if cine != None:
         cine.cin_v_nombre = nombre
         db.session.commit()
-        cine_schema = CineSchema()
-        return cine_schema.dump(cine)
-    return None
-
-def cine_por_id(id):
-    cine = Cine.query.filter_by(cin_i_id=id).first()
-    if cine != None:
         cine_schema = CineSchema()
         return cine_schema.dump(cine)
     return None

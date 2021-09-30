@@ -42,9 +42,3 @@ def modificar_funcion(id, fecha):
         return funcion_schema.dump(funcion)
     return None
 
-def funcion_por_id(id):
-    funcion = Funcion.query.filter_by(fun_i_id=id).first()
-    if funcion != None:
-        funcion_schema = FuncionSchema()
-        return funcion_schema.dump(funcion)
-    return None

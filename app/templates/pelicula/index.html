@@ -19,32 +19,6 @@
                 <a class="btn btn-gen" href="{{url_for('pelicula.agregar')}}">Agregar pelicula</a>
             </div>
         </div>
-
-        <div class="card-deck">
-            {% for pelicula in data.peliculas %}
-            <div class="card">
-                <img class="card-img-top" src="{{ url_for('static', filename='peliculas/'+pelicula.pel_v_ruta_poster)}}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ pelicula.pel_v_titulo }}</h5>
-                    <p class="card-text">
-                        {% if(pelicula.pel_t_sinopsis|length) > 50 %}
-                            {{  pelicula.pel_t_sinopsis[0:50] }} ...
-                        {% else %}
-                            {{ pelicula.pel_t_sinopsis }}
-                        {% endif %}
-                    </p>
-
-
-                </div>
-                <div class="card-footer card-buttons">
-                    <a href="{{url_for('pelicula.modificar', id=pelicula.pel_i_id)}}" class="btn btn-gen">Editar</a>
-                    <a href="{{url_for('pelicula.eliminar',id=pelicula.pel_i_id)}}" class="btn btn-secondary eliminar" data-msj="esta película">Eliminar</a>
-                </div>
-            </div>
-
-            {% endfor %}
-        </div>
-
     </div>
 {% endblock %}
 {% block scripts %}

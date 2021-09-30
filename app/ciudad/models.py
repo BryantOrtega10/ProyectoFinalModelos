@@ -46,10 +46,3 @@ def modificar_ciudad(id, nombre):
         ciudad_schema = CiudadSchema()
         return ciudad_schema.dump(ciudad)
     return None
-
-def ciudad_por_id(id):
-    ciudad = Ciudad.query.filter_by(ciu_i_id=id).first()
-    if ciudad != None:
-        ciudad_schema = CiudadSchema()
-        return ciudad_schema.dump(ciudad)
-    return None
