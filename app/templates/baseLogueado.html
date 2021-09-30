@@ -44,10 +44,12 @@
                             Actores
                         </a>
                     </li>
+                    <li><a href="{{url_for('sala.template')}}" {% if 'sala' in request.path %} class="activo" {% endif %}>
+                            Salas
+                        </a>
+                    </li>
                     <li><a href="{{url_for('ciudad.template')}}">Ciudades</a></li>
                     <li><a href="{{url_for('cine.template')}}">Cines</a></li>
-
-
                     <li>
                         <a href="#" data-bs-toggle="collapse" data-bs-target="#sub-menu1" aria-expanded="false">
                             Categoria <i class="fas fa-sort-down"></i>

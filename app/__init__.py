@@ -10,13 +10,15 @@ from app.db import db, ma
 from app.auth.views import auth
 from app.pelicula.views import pelicula
 from flask_migrate import Migrate
+
+from app.sala.views import sala
 from conf.config import DevelpmentConfig
 from flask_cors import CORS
 from flask_login import LoginManager
 
 
 
-ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula), ('/actor', actor)]
+ADMINISTRADOR = [('/', auth), ('/pelicula', pelicula), ('/actor', actor), ('/sala',sala)]
 SERVICIOS = [('/cliente', cliente), ('/ciudad', ciudad), ('/cine', cine), ('/funcion', funcion)]
 
 def create_app(config=DevelpmentConfig):
