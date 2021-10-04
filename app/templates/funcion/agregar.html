@@ -1,65 +1,64 @@
 {% extends "baseLogueado.html" %}
 {% block title %} Funciones {% endblock %}
 {% block head %}
-    {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block contenido %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url_for('funcion.template')}}">Funciones</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Agregar</li>
-                  </ol>
-                </nav>
-            </div>
-        </div>
-        <h1>Agregar Funciones</h1>
-        <div class="row">
-            <div class="col-12">
-                <form action="{{url_for('funcion.agregar')}}" method="post" class="formulario-general">
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="form-floating">
-                                <input type="datetime-local" class="form-control" id="fun_dt_fecha_hora" name="fun_dt_fecha_hora" placeholder="Fecha">
-                                <label for="fun_dt_fecha_hora">Fecha</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="form-floating">
-                                <select name="cin_fk_ciu" class="form-select" aria-label="Default select example">
-                                    <option value="" selected>Salas</option>
-                                    {% for sala in salas%}
-                                    <option value="{{sala.sal_i_id}}">{{sala.sal_i_numero}}</option>
-                                     {% endfor%}
-                                  </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="form-floating">
-                                <select name="cin_fk_ciu" class="form-select" aria-label="Default select example">
-                                    <option value="" selected>Salas</option>
-                                    {% for pelicula in peliculas%}
-                                    <option value="{{pelicula.peli_i_id}}">{{pelicula.peli_v_titulo}}</option>
-                                     {% endfor%}
-                                  </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-5 col-2">
-                            <button class="btn btn-gen">Enviar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url_for('funcion.template')}}">Funciones</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+                </ol>
+            </nav>
         </div>
     </div>
+    <h1>Agregar Funciones</h1>
+    <div class="row">
+        <div class="col-12">
+            <form action="{{url_for('funcion.agregar')}}" method="post" class="formulario-general">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <input type="datetime-local" class="form-control" id="fun_dt_fecha_hora"
+                                name="fun_dt_fecha_hora" placeholder="Fecha">
+                            <label for="fun_dt_fecha_hora">Fecha</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select id="fun_fk_sal_i" name="fun_fk_sal_i" class="form-select" aria-label="Default select example">
+                                <option value="" selected>Salas</option>
+                                {% for (sala,cine) in salas_cine %}
+                                <option value="{{sala.sal_i_id}}">Sala:{{sala.sal_i_numero}} Cine:{{cine.cin_v_nombre}}</option>
+                                {% endfor%}
+                            </select>
+                            <label for="fun_fk_sal_i">Sala</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select id="fun_fk_pel_i" name="fun_fk_pel_i" class="form-select" aria-label="Default select example">
+                                <option value="" selected>Peliculas</option>
+                                {% for pelicula in peliculas%}
+                                <option value="{{pelicula.pel_i_id}}">{{pelicula.pel_v_titulo}}</option>
+                                {% endfor%}
+                            </select>
+                            <label for="fun_fk_pel_i">Pelicula</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-5 col-2">
+                        <button class="btn btn-gen">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/formulario_general.js')}}"></script>
