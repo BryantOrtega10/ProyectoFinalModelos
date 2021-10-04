@@ -6,7 +6,7 @@ from app.actor.models import obtener_actores
 from app.pelicula.models import obtener_generos, crear_pelicula, crear_genero, crear_pelicula_genero, \
     crear_pelicula_actor, obtener_peliculas, obtener_pelicula_por_id, modificar_pelicula, eliminar_pelicula_genero, \
     eliminar_pelicula_actor, obtener_actores_por_pelicula, obtener_generos_por_pelicula, cuenta_funciones_por_pelicula, \
-    eliminar_pelicula
+    eliminar_pelicula, obtener_peliculas_en_cartelera
 import copy
 import base64
 import uuid
@@ -451,3 +451,17 @@ def eliminar(id):
     else:
         response_body["errors"].append("El id es requerido, para eliminar la película")
         return response_body, status_code
+
+
+
+@pelicula.route("/cartelera", methods=["GET"])
+def cartelera():
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    peliculas = obtener_peliculas_en_cartelera()
+    response_body["message"] = "Peliculas en cartelera cargadas correctamente!"
+    response_body["data"] = peliculas
+    return response_body, status_code
+
+
+

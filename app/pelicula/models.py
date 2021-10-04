@@ -184,3 +184,10 @@ def get_funciones_con_pelicula():
     pelicula_schema = PeliculaSchema()
     dupla_funcion_pelicula = [(funcion_schema.dump(funcion),pelicula_schema.dump(pelicula)) for (funcion,pelicula) in dupla_funcion_pelicula]
     return dupla_funcion_pelicula
+
+
+def obtener_peliculas_en_cartelera():
+    peliculas = Pelicula.query.filter_by(pel_i_estado=1).all()
+    pelicula_schema = PeliculaSchema()
+    peliculas = [pelicula_schema.dump(pelicula) for pelicula in peliculas]
+    return peliculas
