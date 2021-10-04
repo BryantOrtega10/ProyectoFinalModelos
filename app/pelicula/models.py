@@ -1,6 +1,8 @@
 from app.actor.models import Actor, ActorSchema
+from app.cine.models import Cine
 from app.db import db, ma
 from app.funcion.models import Funcion, FuncionSchema
+from app.sala.models import Sala
 
 
 class Genero(db.Model):
@@ -186,8 +188,20 @@ def get_funciones_con_pelicula():
     return dupla_funcion_pelicula
 
 
-def obtener_peliculas_en_cartelera():
-    peliculas = Pelicula.query.filter_by(pel_i_estado=1).all()
+def obtener_peliculas_en_cartelera_por_ciudad(ciudad):
+
+    peliculas =  db.session.query(Pelicula) \
+    .join(Funcion, Pelicula.pel_i_id == Funcion.fun_fk_pel_i)\
+    .join(Sala, Funcion.fun_fk_sal_i == Sala.sal_i_id)\
+    .join(Cine, Sala.sal_fk_cin_i == Cine.cin_i_id)\
+    .filter(Cine.cin_fk_ciu == ciudad).all()
+
     pelicula_schema = PeliculaSchema()
+
     peliculas = [pelicula_schema.dump(pelicula) for pelicula in peliculas]
+    for p in peliculas:
+        p["generos"] = obtener_generos_por_pelicula(p["pel_i_id"])
+        p["actores"] = obtener_actores_por_pelicula(p["pel_i_id"])
+
+
     return peliculas
