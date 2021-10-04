@@ -15,29 +15,31 @@
             </div>
         </div>
         <div class="row">
+            <div class="offset-9 col-3 text-end">
+                <a class="btn btn-gen" href="{{url_for('funcion.agregar')}}">Agregar Funcion</a>
+            </div>
+        </div>
+        <div class="row">
             <table class="table">
                 <thead>
                     <tr>
                       <th scope="col">Fecha</th>
+                      <th cope="col">Pel&iacute;cula</th>
                       <th colspan="2" scope="col">Opciones</th>
                     </tr>
                   </thead>
                 <tbody>
-                {% for funcion in funciones %}
+                {% for (funcion, pelicula) in funciones %}
                     <tr>
-                        <th scope="row">{{ciudad.fun_dt_fecha_hora}}</th>
-                        <td><a href="{{url_for('funcion.editar', id_funcion=funcion.fun_i_id)}}"><i class="far fa-edit"></i></td></a>
-                        <td><a href="{{url_for('funcion.quitar', id_funcion=funcion.fun_i_id)}}"><i class="fas fa-trash-alt"></i></a></td>
+                        <th scope="row">{{funcion.fun_dt_fecha_hora.replace("T"," ")}}</th>
+                        <th scope="row">{{pelicula.pel_v_titulo}}</th>
+                        <td><a href="{{url_for('funcion.editar', id_funcion=funcion.fun_i_id)}}" class="a-rosa"><i class="far fa-edit"></i></td></a>
+                        <td><a href="{{url_for('funcion.quitar', id_funcion=funcion.fun_i_id)}}" class="a-rosa eliminar"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                 
                 {% endfor %}
                 </tbody>
             </table>
-        </div>
-        <div class="row">
-            <div class="offset-9 col-3 text-end">
-                <a class="btn btn-gen" href="{{url_for('funcion.agregar')}}">Agregar Funcion</a>
-            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,4 +1,7 @@
 from app.db import db, ma
+from app.cine.models import Cine, CineSchema
+from app.sala.models import Sala, SalaSchema
+
 
 class Funcion(db.Model):
     fun_i_id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +21,7 @@ def get_funciones():
     return funciones
 
 def crear_funcion(fecha, fk_sala, fk_peli):
-    funcion = Funcion(fun_dt_fecha_hora=fecha, fun_fk_sal_i=fk_sala, fun_fk_pel_i=fk_sala)
+    funcion = Funcion(fun_dt_fecha_hora=fecha, fun_fk_sal_i=fk_sala, fun_fk_pel_i=fk_peli)
     db.session.add(funcion)
     db.session.commit()
     funcion_schema = FuncionSchema()
@@ -48,3 +51,18 @@ def funcion_por_id(id):
         funcion_schema = FuncionSchema()
         return funcion_schema.dump(funcion)
     return None
+
+def funcion_ciudad( fun_fk_pel_i, cin_fk_ciu):
+    resultado = db.session.query(Funcion, Cine) \
+    .join(Sala, Sala.sal_i_id==Funcion.fun_fk_sal_i)\
+    .filter(Cine.cin_i_id==Sala.sal_fk_cin_i)\
+    .filter(Cine.cin_fk_ciu==cin_fk_ciu)\
+    .filter(Funcion.fun_fk_pel_i==fun_fk_pel_i).all()
+    funcion_schema = FuncionSchema()
+    cine_schema = CineSchema()
+
+    resultado = [(funcion_schema.dump(funcion), cine_schema.dump(cine))  for (funcion, cine) in resultado]
+    return resultado
+
+
+

@@ -1,6 +1,6 @@
 from app.actor.models import Actor, ActorSchema
 from app.db import db, ma
-from app.funcion.models import Funcion
+from app.funcion.models import Funcion, FuncionSchema
 
 
 class Genero(db.Model):
@@ -175,3 +175,12 @@ def obtener_pelicula_por_id(pel_i_id):
         return pelicula
     else:
         return None
+
+def get_funciones_con_pelicula():
+    dupla_funcion_pelicula = db.session.query(Funcion,Pelicula) \
+    .filter(Pelicula.pel_i_id==Funcion.fun_fk_pel_i)\
+    .order_by(Pelicula.pel_v_titulo.asc()).all()
+    funcion_schema = FuncionSchema()
+    pelicula_schema = PeliculaSchema()
+    dupla_funcion_pelicula = [(funcion_schema.dump(funcion),pelicula_schema.dump(pelicula)) for (funcion,pelicula) in dupla_funcion_pelicula]
+    return dupla_funcion_pelicula

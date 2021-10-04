@@ -15,6 +15,11 @@
             </div>
         </div>
         <div class="row">
+            <div class="offset-9 col-3 text-end">
+                <a class="btn btn-gen" href="{{url_for('cine.agregar')}}">Agregar Cine</a>
+            </div>
+        </div>
+        <div class="row">
             <table class="table">
                 <thead>
                     <tr>
@@ -26,18 +31,13 @@
                 {% for cine in cines %}
                     <tr>
                         <th scope="row">{{cine.cin_v_nombre}}</th>
-                        <td><a href="{{url_for('cine.editar', id_cine=cine.cin_i_id)}}"><i class="far fa-edit"></i></td></a>
-                        <td><a href="{{url_for('cine.quitar', id_cine=cine.cin_i_id)}}"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><a href="{{url_for('cine.editar', id_cine=cine.cin_i_id)}}" class="a-rosa" ><i class="far fa-edit"></i></td></a>
+                        <td><a href="{{url_for('cine.quitar', id_cine=cine.cin_i_id)}}" class="a-rosa eliminar" data-msj="este cine"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                 
                 {% endfor %}
                 </tbody>
             </table>
-        </div>
-        <div class="row">
-            <div class="offset-9 col-3 text-end">
-                <a class="btn btn-gen" href="{{url_for('cine.agregar')}}">Agregar Cine</a>
-            </div>
         </div>
     </div>
 {% endblock %}
