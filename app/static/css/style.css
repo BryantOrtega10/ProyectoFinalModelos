@@ -394,3 +394,8 @@ div#grilla>div.celda.vacia {
     user-select: none;
 }
 
+
+.container_sala {
+    max-width: calc(100% - 16.66666667%);
+    margin: auto;
+}
