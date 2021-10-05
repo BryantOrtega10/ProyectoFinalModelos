@@ -7,10 +7,11 @@ from app.pelicula.models import obtener_generos, crear_pelicula, crear_genero, c
     crear_pelicula_actor, obtener_peliculas, obtener_pelicula_por_id, modificar_pelicula, eliminar_pelicula_genero, \
     eliminar_pelicula_actor, obtener_actores_por_pelicula, obtener_generos_por_pelicula, cuenta_funciones_por_pelicula, \
     eliminar_pelicula, obtener_peliculas_en_cartelera_por_ciudad, obtener_peliculas_mas_vistas_por_ciudad, \
-    obtener_peliculas_por_estado
+    obtener_peliculas_por_estado, generos_por_cliente
 import copy
 import base64
 import uuid
+import json
 
 pelicula = Blueprint("pelicula", __name__, url_prefix="/pelicula")
 
@@ -470,7 +471,7 @@ def mas_vistos(id_ciudad):
     response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
     status_code = HTTPStatus.OK
     peliculas = obtener_peliculas_mas_vistas_por_ciudad(id_ciudad)
-    response_body["message"] = "Peliculas en cartelera cargadas correctamente!"
+    response_body["message"] = "Peliculas mas vistas cargadas correctamente!"
     response_body["data"] = peliculas
     return response_body, status_code
 
@@ -497,3 +498,17 @@ def pelicula_id(id):
     response_body["data"] = pelicula
     return response_body, status_code
 
+
+@pelicula.route("/recomendados/<int:id_cliente>", methods=["GET"])
+def recomendados(id_cliente):
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+
+    generos = generos_por_cliente(id_cliente)
+    peliculas = obtener_peliculas()
+
+    peliculas_obj = list(filter(lambda pelicula: any(gen in generos for gen in pelicula["generos"]), peliculas))
+    response_body["message"] = "Peliculas recomendadas cargadas correctamente!"
+    response_body["data"] = {"peliculas" : peliculas_obj}
+
+    return response_body, status_code

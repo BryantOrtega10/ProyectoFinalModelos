@@ -128,6 +128,9 @@ def obtener_peliculas():
     peliculas = Pelicula.query.all()
     pelicula_schema = PeliculaSchema()
     peliculas = [pelicula_schema.dump(pelicula) for pelicula in peliculas]
+    for p in peliculas:
+        p["generos"] = obtener_generos_por_pelicula(p["pel_i_id"])
+        p["actores"] = obtener_actores_por_pelicula(p["pel_i_id"])
     return peliculas
 
 
@@ -251,3 +254,16 @@ def obtener_peliculas_por_estado(estado):
 
 
     return peliculas
+
+
+def generos_por_cliente(cliente):
+    generos = db.session.query(Genero) \
+    .join(PeliculaGenero, PeliculaGenero.fk_gen_i_id==Genero.gen_i_id)\
+    .join(Pelicula, Pelicula.pel_i_id == PeliculaGenero.fk_pel_i_id)\
+    .join(Funcion, Pelicula.pel_i_id == Funcion.fun_fk_pel_i)\
+    .join(Reserva, Funcion.fun_i_id == Reserva.res_fk_fun_i)\
+    .filter(Reserva.res_fk_cli_i == cliente).all()
+
+    generos_schema = GeneroSchema()
+    generos = [generos_schema.dump(genero) for genero in generos]
+    return generos
