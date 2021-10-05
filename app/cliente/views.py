@@ -22,7 +22,9 @@ def registrar():
             if cli_d_fecha_nacimiento != "" and cli_d_fecha_nacimiento != None:
                 if cli_fk_ciu_i != "" and cli_fk_ciu_i != None:
                     if cli_fk_usr_i != "" and cli_fk_usr_i != None:
-                        cliente = crear_cliente(cli_i_cedula,cli_v_nombre,cli_d_fecha_nacimiento,cli_fk_ciu_i,cli_fk_usr_i)
+                        year, month, day = map(int, cli_d_fecha_nacimiento.split('-'))
+                        fecha_nacimiento = datetime.date(year, month, day)
+                        cliente = crear_cliente(cli_i_cedula,cli_v_nombre,fecha_nacimiento,cli_fk_ciu_i,cli_fk_usr_i)
                         response_body["message"] = "Cliente creado correctamente!"
                         response_body["data"] = cliente
                     else:
