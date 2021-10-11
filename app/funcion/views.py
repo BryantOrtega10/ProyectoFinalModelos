@@ -1,11 +1,12 @@
 from http import HTTPStatus
 from flask import Blueprint, request, render_template, url_for, redirect
-from app.funcion.models import crear_funcion, get_funciones, eliminar_funcion, modificar_funcion, funcion_por_id, funcion_ciudad
+from app.funcion.models import crear_funcion, get_funciones, eliminar_funcion, modificar_funcion, funcion_por_id, \
+    funcion_ciudad, funciones_salas_cines
 from app.sala.models import get_salas_con_cine
 from app.reserva.models import obtener_reservas_por_funcion
 from app.pelicula.models import obtener_peliculas, get_funciones_con_pelicula
 import copy
-from datetime import datetime
+from datetime import datetime, date
 from flask_login import login_required
 
 RESPONSE_BODY_DEFAULT = {"message": "", "data": [], "errors": []}
@@ -211,6 +212,9 @@ def modificar():
 
 @funcion.route("/eliminar", methods=["DELETE"])
 def eliminar():
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+
     id_funcion = request.json["id_funcion"]
     if id_funcion != "" and id_funcion != None:
         if eliminar_funcion(id_funcion):
@@ -225,3 +229,44 @@ def eliminar():
         status_code = HTTPStatus.BAD_REQUEST
     
     return response_body, status_code
+
+
+@funcion.route("/obtenerCines", methods=["POST"])
+def obtenerCines():
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    id_pelicula = request.json["id"]
+    id_ciudad = request.json["city"]
+    dia = request.json["day"]
+    mes = request.json["month"]
+
+    dia = int(dia)
+    mes = int(mes)
+
+    fecha = datetime(date.today().year, mes, dia)
+
+    fun_sal_cin = funciones_salas_cines(id_pelicula,fecha,id_ciudad)
+
+    resultado = []
+
+
+
+    for (fun, sal, cin) in fun_sal_cin:
+        filtro = list(filter(lambda result: result["cin_v_nombre"] == cin["cin_v_nombre"], resultado))
+        if len(filtro) == 0:
+            resultado.append({
+                "cin_v_nombre": cin["cin_v_nombre"],
+                "horarios": [
+                     {"fun_i_id": fun["fun_i_id"], "sal_i_numero" : sal["sal_i_numero"], "hora" : fun["fun_dt_fecha_hora"][11:16]},
+                ]
+            })
+        else:
+            i = resultado.index(filtro[0])
+            resultado[i]["horarios"].append({"fun_i_id": fun["fun_i_id"], "sal_i_numero" : sal["sal_i_numero"], "hora" : fun["fun_dt_fecha_hora"][11:16]})
+
+
+    response_body["message"] = ""
+    response_body["data"] = resultado
+
+    return response_body, status_code
+

@@ -1,3 +1,5 @@
+from sqlalchemy import func
+
 from app.db import db, ma
 from app.cine.models import Cine, CineSchema
 from app.sala.models import Sala, SalaSchema
@@ -65,4 +67,19 @@ def funcion_ciudad( fun_fk_pel_i, cin_fk_ciu):
     return resultado
 
 
+def funciones_salas_cines(fun_fk_pel_i, fun_dt_fecha, cin_fk_ciu):
+    resultado = db.session.query(Funcion, Sala, Cine) \
+    .join(Sala, Sala.sal_i_id==Funcion.fun_fk_sal_i)\
+    .filter(Cine.cin_i_id==Sala.sal_fk_cin_i)\
+    .filter(Cine.cin_fk_ciu==cin_fk_ciu)\
+    .filter(Funcion.fun_fk_pel_i==fun_fk_pel_i)\
+    .filter(func.DATE(Funcion.fun_dt_fecha_hora) == func.DATE(fun_dt_fecha))\
+    .all()
 
+    funcion_schema = FuncionSchema()
+    sala_schema = SalaSchema()
+    cine_schema = CineSchema()
+
+    resultado = [(funcion_schema.dump(funcion),sala_schema.dump(sala), cine_schema.dump(cine))  for (funcion, sala, cine) in resultado]
+
+    return resultado
