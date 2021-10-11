@@ -1,13 +1,14 @@
 from http import HTTPStatus
 from flask import Blueprint, request, render_template, url_for, redirect
 from app.funcion.models import crear_funcion, get_funciones, eliminar_funcion, modificar_funcion, funcion_por_id, \
-    funcion_ciudad, funciones_salas_cines
+    funcion_ciudad, funciones_salas_cines, obtener_sala_por_funcion
 from app.sala.models import get_salas_con_cine
 from app.reserva.models import obtener_reservas_por_funcion
 from app.pelicula.models import obtener_peliculas, get_funciones_con_pelicula
 import copy
 from datetime import datetime, date
 from flask_login import login_required
+import json
 
 RESPONSE_BODY_DEFAULT = {"message": "", "data": [], "errors": []}
 funcion = Blueprint("funcion", __name__, url_prefix="/funcion")
@@ -249,8 +250,6 @@ def obtenerCines():
 
     resultado = []
 
-
-
     for (fun, sal, cin) in fun_sal_cin:
         filtro = list(filter(lambda result: result["cin_v_nombre"] == cin["cin_v_nombre"], resultado))
         if len(filtro) == 0:
@@ -270,3 +269,24 @@ def obtenerCines():
 
     return response_body, status_code
 
+@funcion.route("/salaFuncion/<int:id_funcion>", methods=["GET"])
+def salaFuncion(id_funcion):
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
+    status_code = HTTPStatus.OK
+    sala = obtener_sala_por_funcion(id_funcion)
+    if sala != None:
+        reservas = obtener_reservas_por_funcion(id_funcion)
+        sillas = json.loads(sala["sal_t_sillas"])
+        for reserva in reservas:
+            sillas_reserva = json.loads(reserva["res_t_sillas"])
+            for silla_reserva in sillas_reserva:
+                sillas[int(silla_reserva["y"])][int(silla_reserva["x"])] = 5
+
+        response_body["message"] = "Sillas consultadas exitosamente"
+        response_body["data"] = {"sillas": sillas}
+    else:
+        response_body["message"] = "No hay salas con esa funcion"
+        response_body["errors"].append("Error sala no encontrada")
+        status_code = HTTPStatus.BAD_REQUEST
+
+    return response_body, status_code

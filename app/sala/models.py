@@ -67,3 +67,4 @@ def obtener_sala_por_id(id):
         return sala_schema.dump(sala)
     else:
         return None
+

@@ -83,3 +83,17 @@ def funciones_salas_cines(fun_fk_pel_i, fun_dt_fecha, cin_fk_ciu):
     resultado = [(funcion_schema.dump(funcion),sala_schema.dump(sala), cine_schema.dump(cine))  for (funcion, sala, cine) in resultado]
 
     return resultado
+
+
+def obtener_sala_por_funcion(fun_i_id):
+    sala = db.session.query(Sala) \
+    .join(Funcion, Sala.sal_i_id==Funcion.fun_fk_sal_i)\
+    .filter(Funcion.fun_i_id==fun_i_id)\
+    .first()
+    if sala != None:
+        sala_schema = SalaSchema()
+        return sala_schema.dump(sala)
+    else:
+        return None
+
+

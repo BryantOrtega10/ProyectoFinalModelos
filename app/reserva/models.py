@@ -50,5 +50,5 @@ def modificar_reserva(id, sillas, modo_pago, estado):
 def obtener_reservas_por_funcion(fun_i_id):
     reservas = Reserva.query.filter_by( res_fk_fun_i=fun_i_id).all()
     reserva_schema = ReservaSchema()
-    reservas = reservas = [reserva_schema.dump(reserva) for reserva in reservas]
+    reservas = [reserva_schema.dump(reserva) for reserva in reservas]
     return reservas
