@@ -58,6 +58,7 @@ def crear():
 
 @auth.route("/usuario_correo", methods=["POST"])
 def usuario_por_correo():
+    response_body = copy.deepcopy(RESPONSE_BODY_DEFAULT)
     usr_v_correo = request.json["usr_v_correo"]
     if usr_v_correo != "" and usr_v_correo != None:
         usuario = obtener_usuario_por_correo(usr_v_correo)

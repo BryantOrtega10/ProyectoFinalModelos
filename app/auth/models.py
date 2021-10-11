@@ -11,8 +11,8 @@ class Usuario(UserMixin, db.Model):
     usr_i_rol = db.Column(db.Integer, default=2)
 
 
-def crear_usuario(usr_v_correo, usr_v_pass):
-    usuario = Usuario(usr_v_correo=usr_v_correo, usr_v_pass=generate_password_hash(usr_v_pass, method="sha256"))
+def crear_usuario(usr_v_correo, usr_v_pass, usr_i_rol):
+    usuario = Usuario(usr_v_correo=usr_v_correo, usr_v_pass=generate_password_hash(usr_v_pass, method="sha256"), usr_i_rol = usr_i_rol)
     db.session.add(usuario)
     db.session.commit()
     return usuario
