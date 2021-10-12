@@ -24,7 +24,7 @@ def login():
                 cliente = obtener_cliente_por_usuario(usuario.id)
                 if cliente != None:
                     response_body["message"] = "Cliente creado correctamente!"
-                    response_body["data"] = {"auth-token":cliente["cli_v_token"]}
+                    response_body["data"] = {"auth-token":cliente["cli_v_token"], "usr_v_correo": usr_v_correo}
                 else:
                     response_body["message"] = "Usuario o contraseña incorrectos"
                     response_body["errors"].append("El usuario no esta relacionado con ningun cliente")
@@ -68,7 +68,7 @@ def registrar():
                                     token = str(uuid.uuid4())
                                     cliente = crear_cliente(cli_i_cedula,cli_v_nombre,fecha_nacimiento,cli_fk_ciu_i,usuario.id, token)
                                     response_body["message"] = "Cliente creado correctamente!"
-                                    response_body["data"] = {"auth-token":token}
+                                    response_body["data"] = {"auth-token":token, "usr_v_correo": usr_v_correo}
                                 else:
                                     response_body["errors"].append("El nombre usuario ya existe")
                                     status_code = HTTPStatus.BAD_REQUEST
