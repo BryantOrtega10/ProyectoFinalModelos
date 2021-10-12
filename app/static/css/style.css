@@ -337,6 +337,7 @@ input.nums {
 
 .card-deck .card {
     width: 23%;
+    margin-bottom: 35px;
 }
 
 .card-deck {

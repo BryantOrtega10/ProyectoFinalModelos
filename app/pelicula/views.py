@@ -445,6 +445,8 @@ def eliminar(id):
             return response_body, status_code
 
         if eliminar_pelicula(id):
+            eliminar_pelicula_genero(id)
+            eliminar_pelicula_actor(id)
             return redirect(url_for('pelicula.index'))
         else:
             response_body["errors"].append("Error al eliminar la pelicula")
