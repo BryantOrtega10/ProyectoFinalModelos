@@ -1,5 +1,7 @@
 from http import HTTPStatus
 from flask import Blueprint, request
+
+from app.cliente.models import obtener_cliente_por_token
 from app.reserva.models import crear_reserva, get_reservas, eliminar_reserva, modificar_reserva
 import copy
 
@@ -21,18 +23,19 @@ def crear():
     status_code = HTTPStatus.OK
 
     res_t_sillas = request.json["res_t_sillas"]
-    res_i_modo_pago = request.json["res_i_modo_pago"]
-    res_i_estado = request.json["res_i_estado"]
+    res_i_modo_pago = 1
+    res_i_estado = 1
     res_fk_fun_i = request.json["res_fk_fun_i"]
-    res_fk_cli_i = request.json["res_fk_cli_i"]
+    token = request.json["token"]
+    cliente = obtener_cliente_por_token(token)
+
 
     if res_t_sillas != "" and res_t_sillas != None:
         if res_i_modo_pago != "" and res_i_modo_pago != None:
             if res_i_estado != "" and res_i_estado != None:
                 if res_fk_fun_i != "" and res_fk_fun_i != None:
-                    if res_fk_cli_i != "" and res_fk_cli_i != None:
-                        reserva = crear_reserva(res_t_sillas, res_i_modo_pago, res_i_estado, res_fk_fun_i, res_fk_cli_i)
-
+                    if cliente != None:
+                        reserva = crear_reserva(res_t_sillas, res_i_modo_pago, res_i_estado, res_fk_fun_i, cliente["cli_i_cedula"])
                         response_body["message"] = "Reserva creada correctamente!"
                         response_body["data"] = reserva
                     else:

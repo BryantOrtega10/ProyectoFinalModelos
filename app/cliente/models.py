@@ -17,6 +17,15 @@ class ClienteSchema(ma.SQLAlchemyAutoSchema):
         fields = ["cli_i_cedula","cli_v_nombre", "cli_v_foto","cli_d_fecha_nacimiento","cli_fk_ciu_i","cli_fk_usr_i", "cli_v_token"]
 
 
+def obtener_cliente_por_token(cli_v_token):
+    cliente = Cliente.query.filter_by(cli_v_token=cli_v_token).first()
+    if cliente != None:
+        cliente_schema = ClienteSchema()
+        cliente = cliente_schema.dump(cliente)
+        return cliente
+    return None
+
+
 def obtener_cliente_por_usuario(cli_fk_usr_i):
     cliente = Cliente.query.filter_by(cli_fk_usr_i=cli_fk_usr_i).first()
     if cliente != None:
