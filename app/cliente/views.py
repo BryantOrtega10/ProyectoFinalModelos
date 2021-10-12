@@ -6,7 +6,7 @@ import copy
 
 from app.auth.models import crear_usuario, obtener_usuario_por_correo, obtener_usuario_por_correo_password
 from app.cliente.models import crear_cliente, get_clientes, eliminar_cliente, modificar_cliente, \
-    obtener_cliente_por_usuario
+    obtener_cliente_por_usuario, existe_cliente_por_cedula
 
 RESPONSE_BODY_DEFAULT = {"message": "", "data": [], "errors": [], "metadata": []}
 cliente = Blueprint("cliente", __name__, url_prefix="/cliente")
@@ -60,16 +60,22 @@ def registrar():
                         if cli_fk_ciu_i != "" and cli_fk_ciu_i != None:
 
                             usuario_verif = obtener_usuario_por_correo(usr_v_correo)
-                            if usuario_verif == None:
-                                fecha_nacimiento = datetime.fromisoformat(cli_d_fecha_nacimiento)
-                                usuario = crear_usuario(usr_v_correo, usr_v_pass, 1)
-                                token = str(uuid.uuid4())
-                                cliente = crear_cliente(cli_i_cedula,cli_v_nombre,fecha_nacimiento,cli_fk_ciu_i,usuario.id, token)
-                                response_body["message"] = "Cliente creado correctamente!"
-                                response_body["data"] = {"auth-token":token}
+                            if not existe_cliente_por_cedula(cli_i_cedula):
+                                if usuario_verif == None:
+
+                                    fecha_nacimiento = datetime.fromisoformat(cli_d_fecha_nacimiento)
+                                    usuario = crear_usuario(usr_v_correo, usr_v_pass, 1)
+                                    token = str(uuid.uuid4())
+                                    cliente = crear_cliente(cli_i_cedula,cli_v_nombre,fecha_nacimiento,cli_fk_ciu_i,usuario.id, token)
+                                    response_body["message"] = "Cliente creado correctamente!"
+                                    response_body["data"] = {"auth-token":token}
+                                else:
+                                    response_body["errors"].append("El nombre usuario ya existe")
+                                    status_code = HTTPStatus.BAD_REQUEST
                             else:
-                                response_body["errors"].append("El usuario ya existe")
+                                response_body["errors"].append("La cedula ya existe")
                                 status_code = HTTPStatus.BAD_REQUEST
+
 
                         else:
                             response_body["errors"].append("FK de ciudad vacia")

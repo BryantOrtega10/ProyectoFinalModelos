@@ -34,6 +34,14 @@ def get_clientes():
     clientes = [cliente_schema.dump(cliente) for cliente in clientes]
     return clientes
 
+
+def existe_cliente_por_cedula(cli_i_cedula):
+    cliente = Cliente.query.filter_by(cli_i_cedula=cli_i_cedula).first()
+    if cliente != None:
+        return True
+    else:
+        return False
+
 def crear_cliente(cedula,nombre,fecha,fk_ciu,fk_usr, token):
     cliente = Cliente(cli_i_cedula=cedula,cli_v_nombre=nombre,cli_d_fecha_nacimiento=fecha,cli_fk_ciu_i=fk_ciu,cli_fk_usr_i=fk_usr, cli_v_token=token)
     db.session.add(cliente)
